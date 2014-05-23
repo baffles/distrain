@@ -1,0 +1,6 @@
+obj/
+*.exe
+/distrain
+/distrain_static
+/distrain.exe
+/distrain_static.exe
