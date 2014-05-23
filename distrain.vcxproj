@@ -57,7 +57,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>allegro-5.0.10-monolith-md-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -77,13 +77,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\test.c" />
+    <ClInclude Include="include\Display.hpp" />
+    <ClInclude Include="include\FontManager.hpp" />
+    <ClInclude Include="include\Game.hpp" />
+    <ClInclude Include="include\GameLoop.hpp" />
+    <ClInclude Include="include\GameTimer.hpp" />
+    <ClInclude Include="include\HasEvents.hpp" />
+    <ClInclude Include="include\RenderController.hpp" />
+    <ClInclude Include="include\ResourceManager.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\test.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="allegro.props" />
+    <ClCompile Include="src\Display.cpp" />
+    <ClCompile Include="src\FontManager.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameLoop.cpp" />
+    <ClCompile Include="src\GameTimer.cpp" />
+    <ClCompile Include="src\HasEvents.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\RenderController.cpp" />
+    <ClCompile Include="src\ResourceManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
