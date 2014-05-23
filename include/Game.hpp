@@ -7,6 +7,8 @@ class RenderController;
 class GameLoop;
 class GameTimer;
 
+class TestScene;
+
 class Game
 {
 private:
@@ -15,6 +17,9 @@ private:
 	RenderController *renderer;
 	GameLoop *loop;
 	GameTimer *timer;
+
+	//temp
+	TestScene *scene;
 	
 public:
 	Game();

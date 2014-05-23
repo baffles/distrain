@@ -8,6 +8,9 @@
 #include "Display.hpp"
 #include "RenderController.hpp"
 
+#include "Character.hpp"
+#include "TestScene.hpp"
+
 using namespace std;
 
 Game::Game()
@@ -26,6 +29,10 @@ Game::Game()
 
 	display->registerWith(loop);
 	timer->registerWith(loop);
+
+	Character *ch = new Character(new CharacterResources(resourceManager->getImageManager()));
+	scene = new TestScene(ch);
+	renderer->setScene(scene);
 }
 
 Game::~Game()
@@ -35,6 +42,8 @@ Game::~Game()
 	delete display;
 	delete timer;
 	delete loop;
+
+	delete scene;
 }
 
 void Game::run()

@@ -2,13 +2,19 @@
 #include <allegro5/allegro_font.h>
 #include "RenderController.hpp"
 #include "Display.hpp"
+#include "Scene.hpp"
 
-RenderController::RenderController(Display *display, bool displayStats, ALLEGRO_FONT *font) : display(display), font(font), displayStats(displayStats), frameRequested(false), lastFps(0), frameCounter(0), frameCounterReset(al_get_time())
+RenderController::RenderController(Display *display, bool displayStats, ALLEGRO_FONT *font) : display(display), currentScene(NULL), font(font), displayStats(displayStats), frameRequested(false), lastFps(0), frameCounter(0), frameCounterReset(al_get_time())
 {
 }
 
 RenderController::~RenderController()
 {
+}
+
+void RenderController::setScene(Scene *scene)
+{
+	currentScene = scene;
 }
 
 void RenderController::calculateFps()
@@ -41,6 +47,9 @@ void RenderController::doRender()
 		// RENDER
 
 		al_clear_to_color(al_map_rgb(0, 0, 0));
+
+		if (currentScene != NULL)
+			currentScene->render();
 
 		if (displayStats && font != NULL)
 		{

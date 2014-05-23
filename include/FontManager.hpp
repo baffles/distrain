@@ -1,5 +1,5 @@
-#ifndef __FONT_HPP
-#define __FONT_HPP
+#ifndef __FONTMANAGER_HPP
+#define __FONTMANAGER_HPP
 
 #include <allegro5/allegro_font.h>
 
