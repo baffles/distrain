@@ -24,6 +24,10 @@ enum TileCellFlag
 	Overlay,
 	AutoWarp,
 	Warp,
+	PushAutoWarp,
+	PushWarp,
+	PopAutoWarp,
+	PopWarp,
 	SpecialUse
 };
 

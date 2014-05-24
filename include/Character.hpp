@@ -112,6 +112,7 @@ public:
 	~CharacterActor();
 
 	void setPosition(float x, float y);
+	void setDirection(Constants::Direction direction);
 
 	void walk(Constants::Direction direction);
 	void run(Constants::Direction direction);

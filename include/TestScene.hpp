@@ -7,12 +7,14 @@
 class Character;
 class CharacterActor;
 class TileEngine;
+class World;
 
 class TestScene : public Scene
 {
 private:
 	CharacterActor *actor;
 	TileEngine *engine;
+	World *world;
 
 	int moveKey;
 

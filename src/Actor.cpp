@@ -71,6 +71,8 @@ float Actor::getVelocity() const
 
 bool Actor::checkCollision(int proposedX, int proposedY) const
 {
+	// this is very naive... it works as long as deltas are small. if logic hiccups
+	// then the player may be able to pass beyond an obstacle (if x/y jumps)
 	return engine->isBlocking(proposedX, proposedY);
 }
 
@@ -80,33 +82,33 @@ void Actor::tick(double delta)
 	{
 		float dist = delta * velocity;
 
-		int rx = static_cast<int>(x + 0.5f), ry = static_cast<int>(y + 0.5f);
+		int rx = floor(x), ry = floor(y);
 
 		switch (direction)
 		{
 		case Direction::Left:
-			if (!checkCollision(floor(x - dist), ry))
+			if (!checkCollision(floor(x - 0.5f - dist), ry))
 				x -= dist;
 			else
 				stopMoving();
 			break;
 
 		case Direction::Right:
-			if (!checkCollision(ceil(x + dist), ry))
+			if (!checkCollision(floor(x + 0.5f + dist), ry))
 				x += dist;
 			else
 				stopMoving();
 			break;
 
 		case Direction::Up:
-			if (!checkCollision(rx, floor(y - dist)))
+			if (!checkCollision(rx, floor(y - 0.5f - dist)))
 				y -= dist;
 			else
 				stopMoving();
 			break;
 
 		case Direction::Down:
-			if (!checkCollision(rx, ceil(y + dist)))
+			if (!checkCollision(rx, floor(y + dist)))
 				y += dist;
 			else
 				stopMoving();

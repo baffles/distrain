@@ -4,15 +4,16 @@
 #include "Scene.hpp"
 #include "Character.hpp"
 #include "Tilemap.hpp"
+#include "World.hpp"
 
 using Constants::Direction;
 
-TestScene::TestScene(Character *character, TileEngine *tileEngine) : engine(tileEngine), actor(new CharacterActor(character, tileEngine)), moveKey(0)
+TestScene::TestScene(Character *character, TileEngine *tileEngine) : engine(tileEngine), actor(new CharacterActor(character, tileEngine)), world(new World(engine, actor)), moveKey(0)
 {
-	auto map = new TileMap("data/maps/test.map");
-	engine->setMap(map);
+	//auto map = new TileMap("data/maps/test.map");
+	//engine->setMap(map);
 
-	actor->setPosition(map->startPositions[Direction::Right].x, map->startPositions[Direction::Right].y);
+	//actor->setPosition(map->startPositions[Direction::Right].x, map->startPositions[Direction::Right].y);
 }
 
 TestScene::~TestScene()
@@ -22,6 +23,7 @@ TestScene::~TestScene()
 void TestScene::tick(double delta)
 {
 	actor->tick(delta);
+	world->tick();
 }
 
 void TestScene::render()
@@ -60,6 +62,10 @@ void TestScene::handleInputEvent(const ALLEGRO_EVENT &event)
 		case ALLEGRO_KEY_D:
 			actor->walk(Direction::Right);
 			moveKey = event.keyboard.keycode;
+			break;
+
+		case ALLEGRO_KEY_SPACE:
+			world->playerUse();
 			break;
 		}
 	}

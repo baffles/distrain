@@ -86,6 +86,23 @@ void TileMap::load(string filename)
 
 			switch (flag / 10)
 			{
+			case 1:
+				switch (flag)
+				{
+				case 10:
+					cells[y][x].flag = TileCellFlag::PopAutoWarp;
+					break;
+
+				case 11:
+					cells[y][x].flag = TileCellFlag::PopWarp;
+					break;
+
+				default:
+					cells[y][x].flag = flag <= 15 ? TileCellFlag::PushAutoWarp : TileCellFlag::PushWarp;
+					cells[y][x].flagArg = frontMatter[flag];
+					break;
+				}
+
 			case 4:
 			case 5:
 			case 6:
@@ -138,6 +155,9 @@ bool TileEngine::isBlocking(int x, int y) const
 {
 	if (!currentMap) return true;
 
+	if (x < 0 || x >= TileMap::ScreenWidth || y < 0 || y >= TileMap::ScreenHeight)
+		return true;
+
 	return currentMap->cells[y][x].blocking;
 }
 
@@ -154,6 +174,9 @@ void TileEngine::renderBase() const
 			auto dx = x * Constants::TileWidth, dy = y * Constants::TileHeight;
 
 			tileSet->draw(cell.tile, dx, dy);
+
+			if (cell.flag == TileCellFlag::Overlay && !cell.blocking)
+				tileSet->draw(cell.flagArg, dx, dy);
 		}
 
 	al_hold_bitmap_drawing(false);
@@ -169,7 +192,7 @@ void TileEngine::renderOverlay() const
 		for (int x = 0; x < TileMap::ScreenWidth; ++x)
 		{
 			auto cell = currentMap->cells[y][x];
-			if (cell.flag == TileCellFlag::Overlay)
+			if (cell.flag == TileCellFlag::Overlay && cell.blocking)
 			{
 				auto dx = x * Constants::TileWidth, dy = y * Constants::TileHeight;
 				tileSet->draw(cell.flagArg, dx, dy);

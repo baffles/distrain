@@ -409,6 +409,11 @@ void CharacterActor::setPosition(float x, float y)
 	setY(y);
 }
 
+void CharacterActor::setDirection(Direction direction)
+{
+	Actor::setDirection(direction);
+}
+
 void CharacterActor::startMoving()
 {
 	Actor::startMoving();
@@ -443,7 +448,7 @@ void CharacterActor::stop()
 
 void CharacterActor::renderAt(float x, float y) const
 {
-	character->render(getDirection(), x, y);
+	character->render(getDirection(), x - Constants::CharacterWidth / 2, y - Constants::CharacterHeight);
 }
 
 void CharacterActor::tick(double delta)
