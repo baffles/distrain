@@ -97,6 +97,8 @@
     <ClInclude Include="include\RenderController.hpp" />
     <ClInclude Include="include\ResourceManager.hpp" />
     <ClInclude Include="include\Scene.hpp" />
+    <ClInclude Include="include\TestScene.hpp" />
+    <ClInclude Include="include\Tilemap.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
@@ -112,6 +114,8 @@
     <ClCompile Include="src\RenderController.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\TestScene.cpp" />
+    <ClCompile Include="src\Tilemap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
