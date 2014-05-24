@@ -85,22 +85,26 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animation.hpp" />
     <ClInclude Include="include\Character.hpp" />
     <ClInclude Include="include\Display.hpp" />
     <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\GameLoop.hpp" />
     <ClInclude Include="include\GameTimer.hpp" />
+    <ClInclude Include="include\LogicManager.hpp" />
     <ClInclude Include="include\RenderController.hpp" />
     <ClInclude Include="include\ResourceManager.hpp" />
     <ClInclude Include="include\Scene.hpp" />
     <ClInclude Include="include\TestScene.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Display.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameLoop.cpp" />
     <ClCompile Include="src\GameTimer.cpp" />
+    <ClCompile Include="src\LogicManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\RenderController.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />

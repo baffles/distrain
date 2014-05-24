@@ -4,13 +4,20 @@
 
 TestScene::TestScene(Character *character) : character(character)
 {
+	character->setDirection(Direction::Down);
+	character->startWalk();
 }
 
 TestScene::~TestScene()
 {
 }
 
+void TestScene::tick(double delta)
+{
+	character->tick(delta);
+}
+
 void TestScene::render()
 {
-	character->testRender(Direction::Down, 15, 15);
+	character->render(15, 15);
 }

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <allegro5/allegro.h>
+#include "LogicManager.hpp"
+#include "Animation.hpp"
 
 class ImageManager;
 
@@ -61,7 +63,7 @@ enum Direction {
 	Left = 3
 };
 
-class Character
+class Character : public HasLogic, private Animation
 {
 private:
 	static const int CharacterWidth = 35;
@@ -72,14 +74,21 @@ private:
 	int bodyId, topId, bottomId, eyesId, hairId, facialHairId, hatId, headId, extraId;
 	bool hasShoes;
 
-	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, int x, int y);
-	void render(Direction direction, int frame, int x, int y);
+	Direction direction;
+
+	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y);
 
 public:
 	Character(CharacterResources *res);
 	~Character();
 
-	void testRender(Direction direction, int x, int y);
+	void startWalk();
+	void endWalk();
+	void setDirection(Direction direction);
+
+	void tick(double delta);
+
+	void render(float x, float y);
 };
 
 #endif

@@ -4,12 +4,14 @@
 #include <allegro5/allegro.h>
 #include <map>
 
+class LogicManager;
 class RenderController;
 class HasEvents;
 
 class GameLoop
 {
 private:
+	LogicManager *logicManager;
 	RenderController *renderer;
 	ALLEGRO_EVENT_QUEUE *eventQueue;
 	bool alive;
@@ -19,7 +21,7 @@ private:
 	HasEvents *findHandler(ALLEGRO_EVENT_SOURCE *src);
 
 public:
-	GameLoop(RenderController *garendererme);
+	GameLoop(LogicManager *logicManager, RenderController *garendererme);
 	~GameLoop();
 
 	void registerHandler(HasEvents *handler);

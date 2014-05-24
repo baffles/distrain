@@ -5,6 +5,7 @@
 #include "GameLoop.hpp"
 #include "GameTimer.hpp"
 #include "Display.hpp"
+#include "LogicManager.hpp"
 #include "RenderController.hpp"
 
 #include "Character.hpp"
@@ -20,9 +21,10 @@ Game::Game()
 	resourceManager = new ResourceManager();
 
 	display = new Display(640, 480, "Distrain - BAF's SpeedHack 2014 Entry");
-	
+
+	logicManager = new LogicManager();
 	renderer = new RenderController(display, true, resourceManager->getFontManager()->getBuiltinFont());
-	loop = new GameLoop(renderer);
+	loop = new GameLoop(logicManager, renderer);
 
 	timer = new GameTimer(renderer, 30);
 
@@ -31,12 +33,14 @@ Game::Game()
 
 	Character *ch = new Character(new CharacterResources(resourceManager->getImageManager()));
 	scene = new TestScene(ch);
+	logicManager->setScene(scene);
 	renderer->setScene(scene);
 }
 
 Game::~Game()
 {
 	delete resourceManager;
+	delete logicManager;
 	delete renderer;
 	delete display;
 	delete timer;

@@ -4,6 +4,7 @@
 class Scene
 {
 public:
+	virtual void tick(double delta) = 0;
 	virtual void render() = 0;
 };
 

@@ -209,7 +209,7 @@ ALLEGRO_BITMAP *CharacterResources::getShoes()
 // body + eyes mandatory, rest optional
 // draw body, then head, then eyes, then facial hair, then hair, then hat, then bottom, then top, then shoes, then misc
 
-Character::Character(CharacterResources *res) : res(res), bodyId(1), topId(0), bottomId(2), eyesId(1), hairId(2), facialHairId(0), hatId(-1), headId(-1), extraId(-1), hasShoes(true)
+Character::Character(CharacterResources *res) : res(res), bodyId(1), topId(0), bottomId(2), eyesId(1), hairId(2), facialHairId(0), hatId(-1), headId(-1), extraId(-1), hasShoes(true), direction(Direction::Down), Animation(5.0f, 2)
 	//: res(res), bodyId(0), topId(-1), bottomId(-1), eyesId(0), hairId(-1), facialHairId(-1), hatId(-1), headId(-1), extraId(-1), hasShoes(false)
 {
 }
@@ -218,13 +218,36 @@ Character::~Character()
 {
 }
 
-void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, int x, int y)
+void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y)
 {
 	al_draw_bitmap_region(chunk, frame * CharacterWidth, direction * CharacterHeight, CharacterWidth, CharacterHeight, x, y, 0);
 }
 
-void Character::render(Direction direction, int frame, int x, int y)
+void Character::startWalk()
 {
+	startAnimation();
+}
+
+void Character::endWalk()
+{
+	stopAnimation();
+}
+
+void Character::setDirection(Direction direction)
+{
+	this->direction = direction;
+}
+
+void Character::tick(double delta)
+{
+	Animation::tick(delta);
+}
+
+void Character::render(float x, float y)
+{
+	// animation will be 0 or 1. if animation is active, alternatve between frames 0 and 2, otherwise stick at frame 1.
+	int frame = Animation::isActive() ? (getCurrentAnimationFrame() * 2) : 1;
+
 	drawChunk(res->getBody(bodyId), direction, frame, x, y);
 	if (headId >= 0) drawChunk(res->getHead(headId), direction, frame, x, y);
 	drawChunk(res->getEyes(eyesId), direction, frame, x, y);
@@ -235,9 +258,4 @@ void Character::render(Direction direction, int frame, int x, int y)
 	if (topId >= 0) drawChunk(res->getTop(topId), direction, frame, x, y);
 	if (hasShoes) drawChunk(res->getShoes(), direction, frame, x, y);
 	if (extraId >= 0) drawChunk(res->getExtra(extraId), direction, frame, x, y);
-}
-
-void Character::testRender(Direction direction, int x, int y)
-{
-	render(direction, 0, x, y);
 }

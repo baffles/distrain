@@ -2,11 +2,12 @@
 #include <iostream>
 #include <allegro5/allegro.h>
 #include "GameLoop.hpp"
+#include "LogicManager.hpp"
 #include "RenderController.hpp"
 
 using namespace std;
 
-GameLoop::GameLoop(RenderController *renderer) : renderer(renderer), alive(false)
+GameLoop::GameLoop(LogicManager *logicManager, RenderController *renderer) : logicManager(logicManager), renderer(renderer), alive(false)
 {
 	eventQueue = al_create_event_queue();
 	if (!eventQueue)
@@ -68,6 +69,8 @@ void GameLoop::run()
 		else
 			cerr << "unknown event " << event.type << endl;
 
+		logicManager->tick();
+
 		if (isIdle())
 			renderer->doRender();
 	}
@@ -80,7 +83,7 @@ void GameLoop::kill()
 
 
 
-HasEvents::HasEvents(): loop(NULL), eventSource(NULL)
+HasEvents::HasEvents() : loop(NULL), eventSource(NULL)
 {
 }
 

@@ -14,6 +14,7 @@ public:
 	TestScene(Character *character);
 	~TestScene();
 
+	void tick(double delta);
 	void render();
 };
 

@@ -3,6 +3,7 @@
 
 class ResourceManager;
 class Display;
+class LogicManager;
 class RenderController;
 class GameLoop;
 class GameTimer;
@@ -14,6 +15,7 @@ class Game
 private:
 	ResourceManager *resourceManager;
 	Display *display;
+	LogicManager *logicManager;
 	RenderController *renderer;
 	GameLoop *loop;
 	GameTimer *timer;
