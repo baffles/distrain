@@ -169,6 +169,10 @@ void CharacterCustomizer::handleInputEvent(const ALLEGRO_EVENT &event)
 			case MenuOption::Quit:
 				game->quit();
 				break;
+
+			default:
+				cyclePart(false);
+				break;
 			}
 			break;
 		}
