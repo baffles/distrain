@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include "Game.hpp"
@@ -7,6 +8,8 @@ using namespace std;
 
 int main(int argc, char **argv[])
 {
+	srand(time(NULL));
+
 	Game *game;
 
 	try
@@ -19,7 +22,7 @@ int main(int argc, char **argv[])
 		return -1;
 	}
 
-	game->setScene(new CharacterCustomizer(game->getResourceManager(), game->getCharacter()));
+	game->setScene(new CharacterCustomizer(game));
 
 	game->run();
 

@@ -56,6 +56,11 @@ void Game::run()
 	timer->stop();
 }
 
+void Game::quit()
+{
+	loop->kill();
+}
+
 void Game::setScene(Scene *scene)
 {
 	currentScene = scene;

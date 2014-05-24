@@ -5,10 +5,11 @@
 #include <allegro5/allegro_font.h>
 #include "Scene.hpp"
 
+class Game;
 class ResourceManager;
 class Character;
 
-enum BodyPart
+enum MenuOption
 {
 	Body = 0,
 	Top,
@@ -20,21 +21,26 @@ enum BodyPart
 	Head,
 	Extra,
 	Shoes,
-	BodyPartCount
+	Randomizer,
+	Play,
+	Quit,
+	MenuOptionCount
 };
 
 class CharacterCustomizer : public Scene
 {
 private:
+	Game *game;
+
 	ALLEGRO_FONT *font;
 	Character *character;
 
-	BodyPart currentPart;
+	MenuOption currentPart;
 
 	void cyclePart(bool reverse);
 
 public:
-	CharacterCustomizer(ResourceManager *resourceManager, Character *character);
+	CharacterCustomizer(Game *game);
 	~CharacterCustomizer();
 
 	void tick(double delta);

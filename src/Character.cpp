@@ -1,7 +1,10 @@
+#include <cstdlib>
 #include <vector>
 #include <allegro5/allegro.h>
 #include "Character.hpp"
 #include "ResourceManager.hpp"
+
+using namespace std;
 
 CharacterResources::CharacterResources(ImageManager *imageManager)
 {
@@ -311,6 +314,22 @@ void Character::preview(Direction direction, bool animated, float x, float y, fl
 {
 	int frame = animated ? getAnimationFrame(direction) : 1;
 	render(direction, frame, x, y, scale);
+}
+
+void Character::randomize()
+{
+	bodyId = rand() % res->getBodyCount();
+	eyesId = rand() % res->getEyesCount();
+
+	headId = rand() % (res->getHeadCount() + 1) - 1;
+	facialHairId = rand() % (res->getFacialHairCount() + 1) - 1;
+	bottomId = rand() % (res->getBottomsCount() + 1) - 1;
+	topId = rand() % (res->getTopsCount() + 1) - 1;
+	extraId = rand() % (res->getExtrasCount() + 1) - 1;
+	hairId = rand() % (res->getHairCount() + 1) - 1;
+	hatId = rand() % (res->getHatCount() + 1) - 1;
+
+	hasShoes = rand() % 2;
 }
 
 // body + eyes mandatory, rest optional

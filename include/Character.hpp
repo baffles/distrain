@@ -95,6 +95,7 @@ public:
 	// customization
 	void preview(Direction direction, bool animated, float x, float y, float scale);
 
+	void randomize();
 	void cycleBody(bool reverse);
 	void cycleTop(bool reverse);
 	void cycleBottom(bool reverse);

@@ -1,15 +1,16 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include "CharacterCustomizer.hpp"
+#include "Game.hpp"
 #include "ResourceManager.hpp"
 #include "Character.hpp"
 
-CharacterCustomizer::CharacterCustomizer(ResourceManager *resourceManager, Character *character) : character(character), currentPart(BodyPart::Body)
+CharacterCustomizer::CharacterCustomizer(Game *game) : game(game), character(game->getCharacter()), currentPart(MenuOption::Body)
 {
 	character->setDirection(Direction::Down);
 	character->startWalk();
 
-	font = resourceManager->getFontManager()->getBuiltinFont();
+	font = game->getResourceManager()->getFontManager()->getBuiltinFont();
 }
 
 CharacterCustomizer::~CharacterCustomizer()
@@ -23,7 +24,8 @@ void CharacterCustomizer::tick(double delta)
 
 void CharacterCustomizer::render()
 {
-	float baseX = 50, baseY = 50;
+	// the customizer is roughly 420x240, so center that (assuming 640x480); bumped down towards the bottom slightly (title area)
+	float baseX = 110, baseY = 170;
 
 	character->preview(Direction::Down, false, baseX, baseY, 4.0f);
 
@@ -54,68 +56,76 @@ void CharacterCustomizer::render()
 	auto unsel = al_map_rgb(255, 255, 255);
 	auto sel = al_map_rgb(255, 83, 13);
 
-	al_draw_text(font, currentPart == BodyPart::Body ? sel : unsel, baseX, baseY, 0, "Body");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Top ? sel : unsel, baseX, baseY, 0, "Top");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Bottom ? sel : unsel, baseX, baseY, 0, "Bottom");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Eyes ? sel : unsel, baseX, baseY, 0, "Eyes");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Hair ? sel : unsel, baseX, baseY, 0, "Hair");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::FacialHair ? sel : unsel, baseX, baseY, 0, "Facial Hair");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Hat ? sel : unsel, baseX, baseY, 0, "Hat");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Head ? sel : unsel, baseX, baseY, 0, "Head");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Extra ? sel : unsel, baseX, baseY, 0, "Accessory");
-	baseY += fontH;
-	al_draw_text(font, currentPart == BodyPart::Shoes ? sel : unsel, baseX, baseY, 0, "Shoes");
+	al_draw_text(font, currentPart == MenuOption::Body ? sel : unsel, baseX, baseY, 0, "Body");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Top ? sel : unsel, baseX, baseY, 0, "Top");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Bottom ? sel : unsel, baseX, baseY, 0, "Bottom");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Eyes ? sel : unsel, baseX, baseY, 0, "Eyes");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Hair ? sel : unsel, baseX, baseY, 0, "Hair");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::FacialHair ? sel : unsel, baseX, baseY, 0, "Facial Hair");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Hat ? sel : unsel, baseX, baseY, 0, "Hat");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Head ? sel : unsel, baseX, baseY, 0, "Head");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Extra ? sel : unsel, baseX, baseY, 0, "Accessory");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Shoes ? sel : unsel, baseX, baseY, 0, "Shoes");
+
+	baseY += 2.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Randomizer ? sel : unsel, baseX, baseY, 0, "Randomize");
+
+	baseY += 4.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Play ? sel : unsel, baseX, baseY, 0, "Play");
+	baseY += 1.5 * fontH;
+	al_draw_text(font, currentPart == MenuOption::Quit ? sel : unsel, baseX, baseY, 0, "Quit");
 }
 
 void CharacterCustomizer::cyclePart(bool reverse)
 {
 	switch (currentPart)
 	{
-	case BodyPart::Body:
+	case MenuOption::Body:
 		character->cycleBody(reverse);
 		break;
 
-	case BodyPart::Top:
+	case MenuOption::Top:
 		character->cycleTop(reverse);
 		break;
 
-	case BodyPart::Bottom:
+	case MenuOption::Bottom:
 		character->cycleBottom(reverse);
 		break;
 
-	case BodyPart::Eyes:
+	case MenuOption::Eyes:
 		character->cycleEyes(reverse);
 		break;
 
-	case BodyPart::Hair:
+	case MenuOption::Hair:
 		character->cycleHair(reverse);
 		break;
 
-	case BodyPart::FacialHair:
+	case MenuOption::FacialHair:
 		character->cycleFacialHair(reverse);
 		break;
 
-	case BodyPart::Hat:
+	case MenuOption::Hat:
 		character->cycleHat(reverse);
 		break;
 
-	case BodyPart::Head:
+	case MenuOption::Head:
 		character->cycleHead(reverse);
 		break;
 
-	case BodyPart::Extra:
+	case MenuOption::Extra:
 		character->cycleExtra(reverse);
 		break;
 
-	case BodyPart::Shoes:
+	case MenuOption::Shoes:
 		character->cycleShoes(reverse);
 		break;
 	}
@@ -128,12 +138,12 @@ void CharacterCustomizer::handleInputEvent(const ALLEGRO_EVENT &event)
 		switch (event.keyboard.keycode)
 		{
 		case ALLEGRO_KEY_UP:
-			currentPart = (BodyPart)(currentPart - 1);
-			if (currentPart < 0) currentPart = (BodyPart)(currentPart + BodyPart::BodyPartCount);
+			currentPart = (MenuOption)(currentPart - 1);
+			if (currentPart < 0) currentPart = (MenuOption)(currentPart + MenuOption::MenuOptionCount);
 			break;
 
 		case ALLEGRO_KEY_DOWN:
-			currentPart = (BodyPart)((currentPart + 1) % BodyPart::BodyPartCount);
+			currentPart = (MenuOption)((currentPart + 1) % MenuOption::MenuOptionCount);
 			break;
 
 		case ALLEGRO_KEY_LEFT:
@@ -142,6 +152,24 @@ void CharacterCustomizer::handleInputEvent(const ALLEGRO_EVENT &event)
 
 		case ALLEGRO_KEY_RIGHT:
 			cyclePart(false);
+			break;
+
+		case ALLEGRO_KEY_ENTER:
+		case ALLEGRO_KEY_PAD_ENTER:
+			switch (currentPart)
+			{
+			case MenuOption::Randomizer:
+				character->randomize();
+				break;
+
+			case MenuOption::Play:
+				// TODO
+				break;
+
+			case MenuOption::Quit:
+				game->quit();
+				break;
+			}
 			break;
 		}
 	}

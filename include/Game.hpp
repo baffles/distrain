@@ -31,6 +31,7 @@ public:
 	~Game();
 
 	void run();
+	void quit();
 
 	void setScene(Scene *scene);
 
