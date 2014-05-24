@@ -6,6 +6,7 @@
 #include "ResourceManager.hpp"
 
 using namespace std;
+using Constants::Direction;
 
 CharacterResources::CharacterResources(ImageManager *imageManager)
 {

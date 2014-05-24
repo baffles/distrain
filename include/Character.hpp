@@ -4,6 +4,7 @@
 #include <vector>
 #include <allegro5/allegro.h>
 #include "LogicManager.hpp"
+#include "Constants.hpp"
 #include "Actor.hpp"
 #include "Animation.hpp"
 
@@ -66,9 +67,9 @@ private:
 	int bodyId, topId, bottomId, eyesId, hairId, facialHairId, hatId, headId, extraId;
 	bool hasShoes;
 
-	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale) const;
-	int getAnimationFrame(Direction direction) const;
-	void render(Direction direction, int frame, float x, float y, float scale) const;
+	void drawChunk(ALLEGRO_BITMAP *chunk, Constants::Direction direction, int frame, float x, float y, float scale) const;
+	int getAnimationFrame(Constants::Direction direction) const;
+	void render(Constants::Direction direction, int frame, float x, float y, float scale) const;
 
 public:
 	Character(CharacterResources *res);
@@ -79,7 +80,7 @@ public:
 
 	void tick(double delta);
 
-	void render(Direction direction, float x, float y, bool animated = true, float scale = 1.0f) const;
+	void render(Constants::Direction direction, float x, float y, bool animated = true, float scale = 1.0f) const;
 
 	// customization
 	void randomize();
@@ -112,8 +113,8 @@ public:
 
 	void setPosition(float x, float y);
 
-	void walk(Direction direction);
-	void run(Direction direction);
+	void walk(Constants::Direction direction);
+	void run(Constants::Direction direction);
 	void stop();
 
 	void tick(double delta);

@@ -4,6 +4,7 @@
 #include "Tilemap.hpp"
 
 using namespace std;
+using Constants::Direction;
 
 Actor::Actor(TileEngine *engine) : engine(engine), moving(false), x(0), y(0), direction(Direction::Down), velocity(0)
 {

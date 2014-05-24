@@ -6,6 +6,8 @@
 #include "ResourceManager.hpp"
 #include "Character.hpp"
 
+using Constants::Direction;
+
 CharacterCustomizer::CharacterCustomizer(Game *game) : game(game), character(game->getCharacter()), currentPart(MenuOption::Body)
 {
 	character->startAnimation();

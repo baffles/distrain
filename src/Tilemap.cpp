@@ -42,6 +42,15 @@ void TileMap::load(string filename)
 	ifstream file(filename);
 	if (!file.is_open()) throw runtime_error("failed to open map " + filename);
 
+	for (int direction = 0; direction < 4; ++direction)
+	{
+		string num;
+		file >> num;
+		startPositions[direction].x = stoi(num);
+		file >> num;
+		startPositions[direction].y = stoi(num);
+	}
+
 	map<int, int> frontMatter;
 
 	while (true)

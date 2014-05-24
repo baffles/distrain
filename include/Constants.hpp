@@ -11,6 +11,13 @@ namespace Constants
 
 	const float WalkVelocity = 3.4f;
 	const float RunVelocity = 7.2f;
+
+	enum Direction {
+		Up = 0,
+		Right = 1,
+		Down = 2,
+		Left = 3
+	};
 }
 
 #endif

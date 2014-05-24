@@ -47,6 +47,11 @@ public:
 		TileCellFlag flag;
 		int flagArg;
 	} cells[ScreenHeight][ScreenWidth];
+
+	struct StartPosition
+	{
+		int x, y;
+	} startPositions[4];
 };
 
 class TileEngine

@@ -1,15 +1,18 @@
 #include <allegro5/allegro.h>
 #include "TestScene.hpp"
+#include "Constants.hpp"
 #include "Scene.hpp"
 #include "Character.hpp"
 #include "Tilemap.hpp"
+
+using Constants::Direction;
 
 TestScene::TestScene(Character *character, TileEngine *tileEngine) : engine(tileEngine), actor(new CharacterActor(character, tileEngine)), moveKey(0)
 {
 	auto map = new TileMap("data/maps/test.map");
 	engine->setMap(map);
 
-	actor->setPosition(3, 3);
+	actor->setPosition(map->startPositions[Direction::Right].x, map->startPositions[Direction::Right].y);
 }
 
 TestScene::~TestScene()

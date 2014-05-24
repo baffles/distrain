@@ -1,14 +1,9 @@
 #ifndef __ACTOR_HPP
 #define __ACTOR_HPP
 
-class TileEngine;
+#include "Constants.hpp"
 
-enum Direction {
-	Up = 0,
-	Right = 1,
-	Down = 2,
-	Left = 3
-};
+class TileEngine;
 
 class Actor
 {
@@ -17,7 +12,7 @@ private:
 
 	bool moving;
 	float x, y;
-	Direction direction;
+	Constants::Direction direction;
 	float velocity;
 
 	bool checkCollision(int proposedX, int proposedY) const;
@@ -28,7 +23,7 @@ protected:
 
 	void setX(float x);
 	void setY(float y);
-	void setDirection(Direction direction);
+	void setDirection(Constants::Direction direction);
 	void setVelocity(float velocity);
 
 	virtual void startMoving();
@@ -40,7 +35,7 @@ public:
 	bool isMoving() const;
 	float getX() const;
 	float getY() const;
-	Direction getDirection() const;
+	Constants::Direction getDirection() const;
 	float getVelocity() const;
 
 	virtual void tick(double delta);
