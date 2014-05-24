@@ -131,7 +131,7 @@ bool TileEngine::isBlocking(int x, int y) const
 	return currentMap->cells[y][x].blocking;
 }
 
-void TileEngine::render() const
+void TileEngine::renderBase() const
 {
 	if (!currentMap) return;
 
@@ -144,9 +144,26 @@ void TileEngine::render() const
 			auto dx = x * TileSet::TileWidth, dy = y * TileSet::TileHeight;
 
 			tileSet->draw(cell.tile, dx, dy);
+		}
 
+	al_hold_bitmap_drawing(false);
+}
+
+void TileEngine::renderOverlay() const
+{
+	if (!currentMap) return;
+
+	al_hold_bitmap_drawing(true);
+
+	for (int y = 0; y < TileMap::ScreenHeight; ++y)
+		for (int x = 0; x < TileMap::ScreenWidth; ++x)
+		{
+			auto cell = currentMap->cells[y][x];
 			if (cell.flag == TileCellFlag::Overlay)
+			{
+				auto dx = x * TileSet::TileWidth, dy = y * TileSet::TileHeight;
 				tileSet->draw(cell.flagArg, dx, dy);
+			}
 		}
 
 	al_hold_bitmap_drawing(false);
