@@ -7,14 +7,14 @@
 
 CharacterCustomizer::CharacterCustomizer(Game *game) : game(game), character(game->getCharacter()), currentPart(MenuOption::Body)
 {
-	character->setDirection(Direction::Down);
-	character->startWalk();
+	character->startAnimation();
 
 	font = game->getResourceManager()->getFontManager()->getBuiltinFont();
 }
 
 CharacterCustomizer::~CharacterCustomizer()
 {
+	character->stopAnimation();
 }
 
 void CharacterCustomizer::tick(double delta)
@@ -27,27 +27,27 @@ void CharacterCustomizer::render()
 	// the customizer is roughly 420x240, so center that (assuming 640x480); bumped down towards the bottom slightly (title area)
 	float baseX = 110, baseY = 170;
 
-	character->preview(Direction::Down, false, baseX, baseY, 4.0f);
+	character->render(Direction::Down, baseX, baseY, false, 4.0f);
 
 	baseX += 5 * Character::CharacterWidth;
 	
-	character->preview(Direction::Up, true, baseX, baseY, 1.0f);
-	character->preview(Direction::Up, false, baseX + Character::CharacterWidth, baseY, 1.0f);
+	character->render(Direction::Up, baseX, baseY);
+	character->render(Direction::Up, baseX + Character::CharacterWidth, baseY, false);
 
 	baseY += Character::CharacterHeight;
 
-	character->preview(Direction::Left, true, baseX, baseY, 1.0f);
-	character->preview(Direction::Left, false, baseX + Character::CharacterWidth, baseY, 1.0f);
+	character->render(Direction::Left, baseX, baseY);
+	character->render(Direction::Left, baseX + Character::CharacterWidth, baseY, false);
 
 	baseY += Character::CharacterHeight;
 
-	character->preview(Direction::Right, true, baseX, baseY, 1.0f);
-	character->preview(Direction::Right, false, baseX + Character::CharacterWidth, baseY, 1.0f);
+	character->render(Direction::Right, baseX, baseY);
+	character->render(Direction::Right, baseX + Character::CharacterWidth, baseY, false);
 
 	baseY += Character::CharacterHeight;
 
-	character->preview(Direction::Down, true, baseX, baseY, 1.0f);
-	character->preview(Direction::Down, false, baseX + Character::CharacterWidth, baseY, 1.0f);
+	character->render(Direction::Down, baseX, baseY);
+	character->render(Direction::Down, baseX + Character::CharacterWidth, baseY, false);
 
 	baseX += 4 * Character::CharacterWidth;
 	baseY -= 3 * Character::CharacterHeight;
@@ -138,12 +138,12 @@ void CharacterCustomizer::handleInputEvent(const ALLEGRO_EVENT &event)
 		switch (event.keyboard.keycode)
 		{
 		case ALLEGRO_KEY_UP:
-			currentPart = (MenuOption)(currentPart - 1);
-			if (currentPart < 0) currentPart = (MenuOption)(currentPart + MenuOption::MenuOptionCount);
+			currentPart = static_cast<MenuOption>(currentPart - 1);
+			if (currentPart < 0) currentPart = static_cast<MenuOption>(currentPart + MenuOption::MenuOptionCount);
 			break;
 
 		case ALLEGRO_KEY_DOWN:
-			currentPart = (MenuOption)((currentPart + 1) % MenuOption::MenuOptionCount);
+			currentPart = static_cast<MenuOption>((currentPart + 1) % MenuOption::MenuOptionCount);
 			break;
 
 		case ALLEGRO_KEY_LEFT:

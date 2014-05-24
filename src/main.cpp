@@ -4,6 +4,8 @@
 #include "Game.hpp"
 #include "CharacterCustomizer.hpp"
 
+//temp
+#include "Character.hpp"
 #include "ResourceManager.hpp"
 #include "Tilemap.hpp"
 #include "TestScene.hpp"
@@ -28,7 +30,8 @@ int main(int argc, char **argv[])
 
 	//game->setScene(new CharacterCustomizer(game));
 
-	game->setScene(new TestScene(new TileEngine(new TileSet(game->getResourceManager()->getImageManager()->getImage("data/open_tileset.png")))));
+	game->getCharacter()->randomize();
+	game->setScene(new TestScene(game->getCharacter(), new TileEngine(new TileSet(game->getResourceManager()->getImageManager()->getImage("data/open_tileset.png")))));
 
 	game->run();
 

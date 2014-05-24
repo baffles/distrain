@@ -210,7 +210,7 @@ ALLEGRO_BITMAP *CharacterResources::getShoes() const
 
 
 
-Character::Character(CharacterResources *res) : res(res), bodyId(0), topId(-1), bottomId(-1), eyesId(0), hairId(-1), facialHairId(-1), hatId(-1), headId(-1), extraId(-1), hasShoes(true), direction(Direction::Down), Animation(5.0f, 3 /*6*/)
+Character::Character(CharacterResources *res) : res(res), bodyId(0), topId(-1), bottomId(-1), eyesId(0), hairId(-1), facialHairId(-1), hatId(-1), headId(-1), extraId(-1), hasShoes(true), Animation(5.0f, 3 /*6*/)
 	// bodyId(1), topId(0), bottomId(2), eyesId(1), hairId(2), facialHairId(0), hatId(-1), headId(-1), extraId(-1)
 {
 }
@@ -219,19 +219,14 @@ Character::~Character()
 {
 }
 
-void Character::startWalk()
+void Character::startAnimation()
 {
-	startAnimation();
+	Animation::startAnimation();
 }
 
-void Character::endWalk()
+void Character::stopAnimation()
 {
-	stopAnimation();
-}
-
-void Character::setDirection(Direction direction)
-{
-	this->direction = direction;
+	Animation::stopAnimation();
 }
 
 void Character::tick(double delta)
@@ -241,7 +236,7 @@ void Character::tick(double delta)
 
 int Character::getAnimationFrame(Direction direction) const
 {
-	return Animation::getCurrentAnimationFrame();
+	return Animation::isActive() ? Animation::getCurrentAnimationFrame() : 1;
 
 	// animation frame will be 0-5. during animation, when moving up or down, alternate between frames 0 and 2. when moving left or right, use frames 0, 1, and 2.
 	// when not moving, lock at frame 1
@@ -305,15 +300,9 @@ void Character::render(Direction direction, int frame, float x, float y, float s
 	if (hatId >= 0) drawChunk(res->getHat(hatId), direction, frame, x, y, scale);
 }
 
-void Character::render(float x, float y) const
+void Character::render(Direction direction, float x, float y, bool animated, float scale) const
 {
-	render(direction, getAnimationFrame(direction), x, y, 1.0f);
-}
-
-void Character::preview(Direction direction, bool animated, float x, float y, float scale) const
-{
-	int frame = animated ? getAnimationFrame(direction) : 1;
-	render(direction, frame, x, y, scale);
+	render(direction, animated ? getAnimationFrame(direction) : 1, x, y, scale);
 }
 
 void Character::randomize()
@@ -399,4 +388,67 @@ void Character::cycleExtra(bool reverse)
 void Character::cycleShoes(bool reverse)
 {
 	hasShoes = !hasShoes;
+}
+
+
+
+const float CharacterActor::WalkVelocity = 3.4f;
+const float CharacterActor::RunVelocity = 10.0f;
+
+CharacterActor::CharacterActor(Character *character, TileEngine *engine) : character(character), Actor(engine)
+{
+}
+
+CharacterActor::~CharacterActor()
+{
+	character->stopAnimation();
+}
+
+void CharacterActor::setPosition(float x, float y)
+{
+	setX(x);
+	setY(y);
+}
+
+void CharacterActor::startMoving()
+{
+	Actor::startMoving();
+	character->startAnimation();
+}
+
+void CharacterActor::stopMoving()
+{
+	Actor::stopMoving();
+	character->stopAnimation();
+	//setDirection(Direction::Down);
+}
+
+void CharacterActor::walk(Direction direction)
+{
+	setDirection(direction);
+	setVelocity(WalkVelocity);
+	startMoving();
+}
+
+void CharacterActor::run(Direction direction)
+{
+	setDirection(direction);
+	setVelocity(RunVelocity);
+	startMoving();
+}
+
+void CharacterActor::stop()
+{
+	stopMoving();
+}
+
+void CharacterActor::renderAt(float x, float y) const
+{
+	character->render(getDirection(), x, y);
+}
+
+void CharacterActor::tick(double delta)
+{
+	Actor::tick(delta);
+	character->tick(delta);
 }

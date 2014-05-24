@@ -1,7 +1,6 @@
 #ifndef __LOGICMANAGER_HPP
 #define __LOGICMANAGER_HPP
 
-#include <vector>
 #include "Scene.hpp"
 
 class LogicManager : public HasScene

@@ -4,9 +4,11 @@
 #include <vector>
 #include <allegro5/allegro.h>
 #include "LogicManager.hpp"
+#include "Actor.hpp"
 #include "Animation.hpp"
 
 class ImageManager;
+class TileEngine;
 
 class CharacterResources
 {
@@ -56,13 +58,6 @@ public:
 	ALLEGRO_BITMAP *getShoes() const;
 };
 
-enum Direction {
-	Up = 0,
-	Right = 1,
-	Down = 2,
-	Left = 3
-};
-
 class Character : public HasLogic, private Animation
 {
 private:
@@ -70,8 +65,6 @@ private:
 
 	int bodyId, topId, bottomId, eyesId, hairId, facialHairId, hatId, headId, extraId;
 	bool hasShoes;
-
-	Direction direction;
 
 	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale) const;
 	int getAnimationFrame(Direction direction) const;
@@ -84,17 +77,14 @@ public:
 	Character(CharacterResources *res);
 	~Character();
 
-	void startWalk();
-	void endWalk();
-	void setDirection(Direction direction);
+	void startAnimation();
+	void stopAnimation();
 
 	void tick(double delta);
 
-	void render(float x, float y) const;
+	void render(Direction direction, float x, float y, bool animated = true, float scale = 1.0f) const;
 
 	// customization
-	void preview(Direction direction, bool animated, float x, float y, float scale) const;
-
 	void randomize();
 	void cycleBody(bool reverse);
 	void cycleTop(bool reverse);
@@ -106,6 +96,33 @@ public:
 	void cycleHead(bool reverse);
 	void cycleExtra(bool reverse);
 	void cycleShoes(bool reverse);
+};
+
+class CharacterActor : public Actor
+{
+private:
+	static const float WalkVelocity;
+	static const float RunVelocity;
+
+	Character *character;
+
+protected:
+	void renderAt(float x, float y) const;
+
+	void startMoving();
+	void stopMoving();
+
+public:
+	CharacterActor(Character *character, TileEngine *engine);
+	~CharacterActor();
+
+	void setPosition(float x, float y);
+
+	void walk(Direction direction);
+	void run(Direction direction);
+	void stop();
+
+	void tick(double delta);
 };
 
 #endif

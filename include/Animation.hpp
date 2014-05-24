@@ -21,8 +21,6 @@ protected:
 	void setNumFrames(int numFrames);
 
 	int getCurrentAnimationFrame() const;
-
-public:
 	void tick(double delta);
 };
 

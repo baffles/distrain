@@ -4,15 +4,20 @@
 #include <allegro5/allegro.h>
 #include "Scene.hpp"
 
+class Character;
+class CharacterActor;
 class TileEngine;
 
 class TestScene : public Scene
 {
 private:
+	CharacterActor *actor;
 	TileEngine *engine;
 
+	int moveKey;
+
 public:
-	TestScene(TileEngine *engine);
+	TestScene(Character *character, TileEngine *engine);
 	~TestScene();
 
 	void tick(double delta);
