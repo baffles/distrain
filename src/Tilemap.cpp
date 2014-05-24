@@ -67,9 +67,10 @@ void TileMap::load(string filename)
 
 			auto splitPos = cell.find(',');
 			string idS = cell.substr(0, splitPos);
-			string flagS = cell.substr(splitPos + 1, cell.length() - splitPos - 1);
+			string flagS = cell.substr(splitPos + 1, cell.length() - splitPos - 2);
 
 			cells[y][x].tile = stoi(idS);
+			cells[y][x].blocking = cell[cell.length() - 1] == 'b';
 
 			int flag = stoi(flagS);
 
@@ -123,9 +124,18 @@ void TileEngine::setMap(TileMap *map)
 	currentMap = map;
 }
 
+bool TileEngine::isBlocking(int x, int y) const
+{
+	if (!currentMap) return true;
+
+	return currentMap->cells[y][x].blocking;
+}
+
 void TileEngine::render() const
 {
 	if (!currentMap) return;
+
+	al_hold_bitmap_drawing(true);
 
 	for (int y = 0; y < TileMap::ScreenHeight; ++y)
 		for (int x = 0; x < TileMap::ScreenWidth; ++x)
@@ -138,4 +148,6 @@ void TileEngine::render() const
 			if (cell.flag == TileCellFlag::Overlay)
 				tileSet->draw(cell.flagArg, dx, dy);
 		}
+
+	al_hold_bitmap_drawing(false);
 }

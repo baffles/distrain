@@ -45,6 +45,7 @@ public:
 	struct TileCell
 	{
 		int tile;
+		bool blocking;
 		TileCellFlag flag;
 		int flagArg;
 	} cells[ScreenHeight][ScreenWidth];
@@ -62,6 +63,7 @@ public:
 
 	void setMap(TileMap *map);
 
+	bool isBlocking(int x, int y) const;
 	void render() const;
 };
 
