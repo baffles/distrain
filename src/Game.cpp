@@ -24,7 +24,7 @@ Game::Game() : currentScene(NULL)
 	display = new Display(Constants::ResolutionX, Constants::ResolutionY, "Distrain - BAF's SpeedHack 2014 Entry");
 
 	logicManager = new LogicManager();
-	renderer = new RenderController(display, true, resourceManager->getFontManager()->getBuiltinFont());
+	renderer = new RenderController(display, Constants::ShowRenderingStats, resourceManager->getFontManager()->getBuiltinFont());
 	keyboardManager = new KeyboardManager();
 	loop = new GameLoop(logicManager, renderer);
 

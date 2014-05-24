@@ -5,6 +5,7 @@ namespace Constants
 {
 	const int ResolutionX = 640, ResolutionY = 480;
 	const float FPS = 30.0f;
+	const bool ShowRenderingStats = true;
 
 	const int TileWidth = 32, TileHeight = 32;
 	const int CharacterWidth = 32, CharacterHeight = 48;
