@@ -10,7 +10,7 @@ Animation::~Animation()
 {
 }
 
-bool Animation::isActive()
+bool Animation::isActive() const
 {
 	return active;
 }
@@ -35,7 +35,7 @@ void Animation::setNumFrames(int numFrames)
 	this->numFrames = numFrames;
 }
 
-int Animation::getCurrentAnimationFrame()
+int Animation::getCurrentAnimationFrame() const
 {
 	return (int)frame;
 }

@@ -70,32 +70,32 @@ void Game::setScene(Scene *scene)
 	keyboardManager->setScene(scene);
 }
 
-ResourceManager *Game::getResourceManager()
+ResourceManager *Game::getResourceManager() const
 {
 	return resourceManager;
 }
 
-Display *Game::getDisplay()
+Display *Game::getDisplay() const
 {
 	return display;
 }
 
-RenderController *Game::getRenderer()
+RenderController *Game::getRenderer() const
 {
 	return renderer;
 }
 
-KeyboardManager *Game::getKeyboardManager()
+KeyboardManager *Game::getKeyboardManager() const
 {
 	return keyboardManager;
 }
 
-GameLoop *Game::getLoop()
+GameLoop *Game::getLoop() const
 {
 	return loop;
 }
 
-Character *Game::getCharacter()
+Character *Game::getCharacter() const
 {
 	return character;
 }

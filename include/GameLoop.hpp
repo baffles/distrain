@@ -27,7 +27,7 @@ public:
 	void registerHandler(HasEvents *handler);
 	void unregisterHandler(HasEvents *handler);
 
-	bool isIdle();
+	bool isIdle() const;
 	void run();
 	void kill();
 };

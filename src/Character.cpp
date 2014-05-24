@@ -113,97 +113,97 @@ CharacterResources::~CharacterResources()
 	shoes = NULL;
 }
 
-int CharacterResources::getBodyCount()
+int CharacterResources::getBodyCount() const
 {
 	return bodies.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getBody(int id)
+ALLEGRO_BITMAP *CharacterResources::getBody(int id) const
 {
 	return bodies[id];
 }
 
-int CharacterResources::getTopsCount()
+int CharacterResources::getTopsCount() const
 {
 	return tops.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getTop(int id)
+ALLEGRO_BITMAP *CharacterResources::getTop(int id) const
 {
 	return tops[id];
 }
 
-int CharacterResources::getBottomsCount()
+int CharacterResources::getBottomsCount() const
 {
 	return bottoms.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getBottom(int id)
+ALLEGRO_BITMAP *CharacterResources::getBottom(int id) const
 {
 	return bottoms[id];
 }
 
-int CharacterResources::getEyesCount()
+int CharacterResources::getEyesCount() const
 {
 	return eyes.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getEyes(int id)
+ALLEGRO_BITMAP *CharacterResources::getEyes(int id) const
 {
 	return eyes[id];
 }
 
-int CharacterResources::getHairCount()
+int CharacterResources::getHairCount() const
 {
 	return hair.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getHair(int id)
+ALLEGRO_BITMAP *CharacterResources::getHair(int id) const
 {
 	return hair[id];
 }
 
-int CharacterResources::getFacialHairCount()
+int CharacterResources::getFacialHairCount() const
 {
 	return facialHair.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getFacialHair(int id)
+ALLEGRO_BITMAP *CharacterResources::getFacialHair(int id) const
 {
 	return facialHair[id];
 }
 
-int CharacterResources::getHatCount()
+int CharacterResources::getHatCount() const
 {
 	return hats.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getHat(int id)
+ALLEGRO_BITMAP *CharacterResources::getHat(int id) const
 {
 	return hats[id];
 }
 
-int CharacterResources::getHeadCount()
+int CharacterResources::getHeadCount() const
 {
 	return heads.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getHead(int id)
+ALLEGRO_BITMAP *CharacterResources::getHead(int id) const
 {
 	return heads[id];
 }
 
-int CharacterResources::getExtrasCount()
+int CharacterResources::getExtrasCount() const
 {
 	return extras.size();
 }
 
-ALLEGRO_BITMAP *CharacterResources::getExtra(int id)
+ALLEGRO_BITMAP *CharacterResources::getExtra(int id) const
 {
 	return extras[id];
 }
 
-ALLEGRO_BITMAP *CharacterResources::getShoes()
+ALLEGRO_BITMAP *CharacterResources::getShoes() const
 {
 	return shoes;
 }
@@ -239,7 +239,7 @@ void Character::tick(double delta)
 	Animation::tick(delta);
 }
 
-int Character::getAnimationFrame(Direction direction)
+int Character::getAnimationFrame(Direction direction) const
 {
 	return Animation::getCurrentAnimationFrame();
 
@@ -252,7 +252,7 @@ int Character::getAnimationFrame(Direction direction)
 		) : 1;*/
 }
 
-void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale)
+void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale) const
 {
 	// weird coords.... https://github.com/silveira/openpixels/blob/master/lib/chars.json
 	float cx, cy;
@@ -290,7 +290,7 @@ void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame,
 		al_draw_scaled_bitmap(chunk, cx, cy, CharacterWidth, CharacterHeight, x, y, CharacterWidth * scale, CharacterHeight * scale, 0);
 }
 
-void Character::render(Direction direction, int frame, float x, float y, float scale)
+void Character::render(Direction direction, int frame, float x, float y, float scale) const
 {
 	// draw body, then head, then eyes, then facial hair, then shoes, then bottom, then top, then misc, then hair, then hat,
 	drawChunk(res->getBody(bodyId), direction, frame, x, y, scale);
@@ -305,12 +305,12 @@ void Character::render(Direction direction, int frame, float x, float y, float s
 	if (hatId >= 0) drawChunk(res->getHat(hatId), direction, frame, x, y, scale);
 }
 
-void Character::render(float x, float y)
+void Character::render(float x, float y) const
 {
 	render(direction, getAnimationFrame(direction), x, y, 1.0f);
 }
 
-void Character::preview(Direction direction, bool animated, float x, float y, float scale)
+void Character::preview(Direction direction, bool animated, float x, float y, float scale) const
 {
 	int frame = animated ? getAnimationFrame(direction) : 1;
 	render(direction, frame, x, y, scale);

@@ -35,12 +35,12 @@ void Display::handleEvent(GameLoop *loop, const ALLEGRO_EVENT &event)
 		loop->kill();
 }
 
-int Display::getW()
+int Display::getW() const
 {
 	return w;
 }
 
-int Display::getH()
+int Display::getH() const
 {
 	return h;
 }

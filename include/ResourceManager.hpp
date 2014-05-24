@@ -14,8 +14,8 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
-	FontManager *getFontManager();
-	ImageManager *getImageManager();
+	FontManager *getFontManager() const;
+	ImageManager *getImageManager() const;
 };
 
 #include <allegro5/allegro_font.h>

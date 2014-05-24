@@ -47,7 +47,7 @@ HasEvents *GameLoop::findHandler(ALLEGRO_EVENT_SOURCE *src)
 	return entry->second;
 }
 
-bool GameLoop::isIdle()
+bool GameLoop::isIdle() const
 {
 	return al_is_event_queue_empty(eventQueue);
 }

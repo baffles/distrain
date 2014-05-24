@@ -18,12 +18,12 @@ ResourceManager::~ResourceManager()
 	delete imageManager;
 }
 
-FontManager *ResourceManager::getFontManager()
+FontManager *ResourceManager::getFontManager() const
 {
 	return fontManager;
 }
 
-ImageManager *ResourceManager::getImageManager()
+ImageManager *ResourceManager::getImageManager() const
 {
 	return imageManager;
 }

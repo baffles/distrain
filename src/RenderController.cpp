@@ -65,7 +65,7 @@ void RenderController::doRender()
 	}
 }
 
-float RenderController::getFps()
+float RenderController::getFps() const
 {
 	return lastFps;
 }

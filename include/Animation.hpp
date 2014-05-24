@@ -13,14 +13,14 @@ protected:
 	Animation(float frameRate, int numFrames);
 	~Animation();
 
-	bool isActive();
+	bool isActive() const;
 	void startAnimation();
 	void stopAnimation();
 
 	void setFrameRate(float frameRate);
 	void setNumFrames(int numFrames);
 
-	int getCurrentAnimationFrame();
+	int getCurrentAnimationFrame() const;
 
 public:
 	void tick(double delta);

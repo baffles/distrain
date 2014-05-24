@@ -35,13 +35,13 @@ public:
 
 	void setScene(Scene *scene);
 
-	ResourceManager *getResourceManager();
-	Display *getDisplay();
-	RenderController *getRenderer();
-	KeyboardManager *getKeyboardManager();
-	GameLoop *getLoop();
+	ResourceManager *getResourceManager() const;
+	Display *getDisplay() const;
+	RenderController *getRenderer() const;
+	KeyboardManager *getKeyboardManager() const;
+	GameLoop *getLoop() const;
 
-	Character *getCharacter();
+	Character *getCharacter() const;
 };
 
 #endif

@@ -26,34 +26,34 @@ public:
 	CharacterResources(ImageManager *imageManager);
 	~CharacterResources();
 
-	int getBodyCount();
-	ALLEGRO_BITMAP *getBody(int id);
+	int getBodyCount() const;
+	ALLEGRO_BITMAP *getBody(int id) const;
 
-	int getTopsCount();
-	ALLEGRO_BITMAP *getTop(int id);
+	int getTopsCount() const;
+	ALLEGRO_BITMAP *getTop(int id) const;
 
-	int getBottomsCount();
-	ALLEGRO_BITMAP *getBottom(int id);
+	int getBottomsCount() const;
+	ALLEGRO_BITMAP *getBottom(int id) const;
 
-	int getEyesCount();
-	ALLEGRO_BITMAP *getEyes(int id);
+	int getEyesCount() const;
+	ALLEGRO_BITMAP *getEyes(int id) const;
 
-	int getHairCount();
-	ALLEGRO_BITMAP *getHair(int id);
+	int getHairCount() const;
+	ALLEGRO_BITMAP *getHair(int id) const;
 
-	int getFacialHairCount();
-	ALLEGRO_BITMAP *getFacialHair(int id);
+	int getFacialHairCount() const;
+	ALLEGRO_BITMAP *getFacialHair(int id) const;
 
-	int getHatCount();
-	ALLEGRO_BITMAP *getHat(int id);
+	int getHatCount() const;
+	ALLEGRO_BITMAP *getHat(int id) const;
 
-	int getHeadCount();
-	ALLEGRO_BITMAP *getHead(int id);
+	int getHeadCount() const;
+	ALLEGRO_BITMAP *getHead(int id) const;
 
-	int getExtrasCount();
-	ALLEGRO_BITMAP *getExtra(int id);
+	int getExtrasCount() const;
+	ALLEGRO_BITMAP *getExtra(int id) const;
 
-	ALLEGRO_BITMAP *getShoes();
+	ALLEGRO_BITMAP *getShoes() const;
 };
 
 enum Direction {
@@ -73,9 +73,9 @@ private:
 
 	Direction direction;
 
-	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale);
-	int getAnimationFrame(Direction direction);
-	void render(Direction direction, int frame, float x, float y, float scale);
+	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale) const;
+	int getAnimationFrame(Direction direction) const;
+	void render(Direction direction, int frame, float x, float y, float scale) const;
 
 public:
 	static const int CharacterWidth = 32;
@@ -90,10 +90,10 @@ public:
 
 	void tick(double delta);
 
-	void render(float x, float y);
+	void render(float x, float y) const;
 
 	// customization
-	void preview(Direction direction, bool animated, float x, float y, float scale);
+	void preview(Direction direction, bool animated, float x, float y, float scale) const;
 
 	void randomize();
 	void cycleBody(bool reverse);

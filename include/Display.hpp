@@ -21,8 +21,8 @@ public:
 	ALLEGRO_DISPLAY *getAllegroDisplay();
 	void handleEvent(GameLoop *loop, const ALLEGRO_EVENT &event);
 
-	int getW();
-	int getH();
+	int getW() const;
+	int getH() const;
 
 	void setTarget();
 	void flip();
