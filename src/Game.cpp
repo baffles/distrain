@@ -7,13 +7,13 @@
 #include "Display.hpp"
 #include "LogicManager.hpp"
 #include "RenderController.hpp"
-
+#include "KeyboardManager.hpp"
+#include "Scene.hpp"
 #include "Character.hpp"
-#include "TestScene.hpp"
 
 using namespace std;
 
-Game::Game()
+Game::Game() : currentScene(NULL)
 {
 	if (!al_init())
 		throw runtime_error("failed to initialize allegro");
@@ -24,17 +24,16 @@ Game::Game()
 
 	logicManager = new LogicManager();
 	renderer = new RenderController(display, true, resourceManager->getFontManager()->getBuiltinFont());
+	keyboardManager = new KeyboardManager();
 	loop = new GameLoop(logicManager, renderer);
 
 	timer = new GameTimer(renderer, 30);
 
+	keyboardManager->registerWith(loop);
 	display->registerWith(loop);
 	timer->registerWith(loop);
 
-	Character *ch = new Character(new CharacterResources(resourceManager->getImageManager()));
-	scene = new TestScene(ch);
-	logicManager->setScene(scene);
-	renderer->setScene(scene);
+	character = new Character(new CharacterResources(resourceManager->getImageManager()));
 }
 
 Game::~Game()
@@ -42,11 +41,12 @@ Game::~Game()
 	delete resourceManager;
 	delete logicManager;
 	delete renderer;
+	delete keyboardManager;
 	delete display;
 	delete timer;
 	delete loop;
 
-	delete scene;
+	currentScene = NULL;
 }
 
 void Game::run()
@@ -54,6 +54,15 @@ void Game::run()
 	timer->start();
 	loop->run();
 	timer->stop();
+}
+
+void Game::setScene(Scene *scene)
+{
+	currentScene = scene;
+
+	logicManager->setScene(scene);
+	renderer->setScene(scene);
+	keyboardManager->setScene(scene);
 }
 
 ResourceManager *Game::getResourceManager()
@@ -71,7 +80,17 @@ RenderController *Game::getRenderer()
 	return renderer;
 }
 
+KeyboardManager *Game::getKeyboardManager()
+{
+	return keyboardManager;
+}
+
 GameLoop *Game::getLoop()
 {
 	return loop;
+}
+
+Character *Game::getCharacter()
+{
+	return character;
 }

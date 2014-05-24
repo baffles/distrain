@@ -1,6 +1,7 @@
 #include <exception>
 #include <iostream>
 #include "Game.hpp"
+#include "TestScene.hpp"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ int main(int argc, char **argv[])
 		cerr << "Error initializing game: " << e.what() << endl;
 		return -1;
 	}
+
+	game->setScene(new TestScene(game->getResourceManager(), game->getCharacter()));
 
 	game->run();
 

@@ -5,10 +5,12 @@ class ResourceManager;
 class Display;
 class LogicManager;
 class RenderController;
+class KeyboardManager;
 class GameLoop;
 class GameTimer;
 
-class TestScene;
+class Character;
+class Scene;
 
 class Game
 {
@@ -17,11 +19,12 @@ private:
 	Display *display;
 	LogicManager *logicManager;
 	RenderController *renderer;
+	KeyboardManager *keyboardManager;
 	GameLoop *loop;
 	GameTimer *timer;
 
-	//temp
-	TestScene *scene;
+	Character *character;
+	Scene *currentScene;
 	
 public:
 	Game();
@@ -29,10 +32,15 @@ public:
 
 	void run();
 
+	void setScene(Scene *scene);
+
 	ResourceManager *getResourceManager();
 	Display *getDisplay();
 	RenderController *getRenderer();
+	KeyboardManager *getKeyboardManager();
 	GameLoop *getLoop();
+
+	Character *getCharacter();
 };
 
 #endif

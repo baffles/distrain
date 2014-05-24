@@ -3,15 +3,14 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
+#include "Scene.hpp"
 
 class Display;
-class Scene;
 
-class RenderController
+class RenderController : public HasScene
 {
 private:
 	Display *display;
-	Scene *currentScene;
 
 	ALLEGRO_FONT *font;
 	bool displayStats;
@@ -28,8 +27,6 @@ private:
 public:
 	RenderController(Display *display, bool displayStats, ALLEGRO_FONT *font = NULL);
 	~RenderController();
-
-	void setScene(Scene *scene);
 
 	void requestFrame();
 	void doRender();

@@ -12,11 +12,6 @@ LogicManager::~LogicManager()
 {
 }
 
-void LogicManager::setScene(Scene *scene)
-{
-	currentScene = scene;
-}
-
 void LogicManager::tick()
 {
 	double now = al_get_time(), delta = now - lastTick;

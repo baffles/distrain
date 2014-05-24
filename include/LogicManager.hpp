@@ -2,20 +2,16 @@
 #define __LOGICMANAGER_HPP
 
 #include <vector>
+#include "Scene.hpp"
 
-class Scene;
-
-class LogicManager
+class LogicManager : public HasScene
 {
 private:
-	Scene *currentScene;
 	double lastTick;
 
 public:
 	LogicManager();
 	~LogicManager();
-
-	void setScene(Scene *scene);
 
 	void tick();
 };

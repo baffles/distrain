@@ -91,6 +91,7 @@
     <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\GameLoop.hpp" />
     <ClInclude Include="include\GameTimer.hpp" />
+    <ClInclude Include="include\KeyboardManager.hpp" />
     <ClInclude Include="include\LogicManager.hpp" />
     <ClInclude Include="include\RenderController.hpp" />
     <ClInclude Include="include\ResourceManager.hpp" />
@@ -104,10 +105,12 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameLoop.cpp" />
     <ClCompile Include="src\GameTimer.cpp" />
+    <ClCompile Include="src\KeyboardManager.cpp" />
     <ClCompile Include="src\LogicManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\RenderController.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\TestScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

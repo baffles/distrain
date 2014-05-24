@@ -206,21 +206,14 @@ ALLEGRO_BITMAP *CharacterResources::getShoes()
 }
 
 
-// body + eyes mandatory, rest optional
-// draw body, then head, then eyes, then facial hair, then hair, then hat, then bottom, then top, then shoes, then misc
 
-Character::Character(CharacterResources *res) : res(res), bodyId(1), topId(0), bottomId(2), eyesId(1), hairId(2), facialHairId(0), hatId(-1), headId(-1), extraId(-1), hasShoes(true), direction(Direction::Down), Animation(5.0f, 2)
-	//: res(res), bodyId(0), topId(-1), bottomId(-1), eyesId(0), hairId(-1), facialHairId(-1), hatId(-1), headId(-1), extraId(-1), hasShoes(false)
+Character::Character(CharacterResources *res) : res(res), bodyId(0), topId(-1), bottomId(-1), eyesId(0), hairId(-1), facialHairId(-1), hatId(-1), headId(-1), extraId(-1), hasShoes(true), direction(Direction::Down), Animation(5.0f, 3 /*6*/)
+	// bodyId(1), topId(0), bottomId(2), eyesId(1), hairId(2), facialHairId(0), hatId(-1), headId(-1), extraId(-1)
 {
 }
 
 Character::~Character()
 {
-}
-
-void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y)
-{
-	al_draw_bitmap_region(chunk, frame * CharacterWidth, direction * CharacterHeight, CharacterWidth, CharacterHeight, x, y, 0);
 }
 
 void Character::startWalk()
@@ -243,19 +236,148 @@ void Character::tick(double delta)
 	Animation::tick(delta);
 }
 
+int Character::getAnimationFrame(Direction direction)
+{
+	return Animation::getCurrentAnimationFrame();
+
+	// animation frame will be 0-5. during animation, when moving up or down, alternate between frames 0 and 2. when moving left or right, use frames 0, 1, and 2.
+	// when not moving, lock at frame 1
+	/*return Animation::isActive() ?
+		(direction == Direction::Up || direction == Direction::Down ?
+			(Animation::getCurrentAnimationFrame() % 2) * 2 :
+			(Animation::getCurrentAnimationFrame() % 3)
+		) : 1;*/
+}
+
+void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale)
+{
+	// weird coords.... https://github.com/silveira/openpixels/blob/master/lib/chars.json
+	float cx, cy;
+	switch (frame)
+	{
+	case 0:
+		cx = 0;
+		break;
+	case 1:
+		cx = 36;
+		break;
+	case 2:
+		cx = 73;
+		break;
+	}
+	switch (direction)
+	{
+	case Direction::Up:
+		cy = 7;
+		break;
+	case Direction::Right:
+		cy = 55;
+		break;
+	case Direction::Down:
+		cy = 103;
+		break;
+	case Direction::Left:
+		cy = 151;
+		break;
+	}
+
+	if (scale == 1.0f)
+		al_draw_bitmap_region(chunk, cx, cy, CharacterWidth, CharacterHeight, x, y, 0);
+	else
+		al_draw_scaled_bitmap(chunk, cx, cy, CharacterWidth, CharacterHeight, x, y, CharacterWidth * scale, CharacterHeight * scale, 0);
+}
+
+void Character::render(Direction direction, int frame, float x, float y, float scale)
+{
+	// draw body, then head, then eyes, then facial hair, then shoes, then bottom, then top, then misc, then hair, then hat,
+	drawChunk(res->getBody(bodyId), direction, frame, x, y, scale);
+	if (headId >= 0) drawChunk(res->getHead(headId), direction, frame, x, y, scale);
+	drawChunk(res->getEyes(eyesId), direction, frame, x, y, scale);
+	if (facialHairId >= 0) drawChunk(res->getFacialHair(facialHairId), direction, frame, x, y, scale);
+	if (hasShoes) drawChunk(res->getShoes(), direction, frame, x, y, scale);
+	if (bottomId >= 0) drawChunk(res->getBottom(bottomId), direction, frame, x, y, scale);
+	if (topId >= 0) drawChunk(res->getTop(topId), direction, frame, x, y, scale);
+	if (extraId >= 0) drawChunk(res->getExtra(extraId), direction, frame, x, y, scale);
+	if (hairId >= 0) drawChunk(res->getHair(hairId), direction, frame, x, y, scale);
+	if (hatId >= 0) drawChunk(res->getHat(hatId), direction, frame, x, y, scale);
+}
+
 void Character::render(float x, float y)
 {
-	// animation will be 0 or 1. if animation is active, alternatve between frames 0 and 2, otherwise stick at frame 1.
-	int frame = Animation::isActive() ? (getCurrentAnimationFrame() * 2) : 1;
+	render(direction, getAnimationFrame(direction), x, y, 1.0f);
+}
 
-	drawChunk(res->getBody(bodyId), direction, frame, x, y);
-	if (headId >= 0) drawChunk(res->getHead(headId), direction, frame, x, y);
-	drawChunk(res->getEyes(eyesId), direction, frame, x, y);
-	if (facialHairId >= 0) drawChunk(res->getFacialHair(facialHairId), direction, frame, x, y);
-	if (hairId >= 0) drawChunk(res->getHair(hairId), direction, frame, x, y);
-	if (hatId >= 0) drawChunk(res->getHat(hatId), direction, frame, x, y);
-	if (bottomId >= 0) drawChunk(res->getBottom(bottomId), direction, frame, x, y);
-	if (topId >= 0) drawChunk(res->getTop(topId), direction, frame, x, y);
-	if (hasShoes) drawChunk(res->getShoes(), direction, frame, x, y);
-	if (extraId >= 0) drawChunk(res->getExtra(extraId), direction, frame, x, y);
+void Character::preview(Direction direction, bool animated, float x, float y, float scale)
+{
+	int frame = animated ? getAnimationFrame(direction) : 1;
+	render(direction, frame, x, y, scale);
+}
+
+// body + eyes mandatory, rest optional
+void Character::cycleBody(bool reverse)
+{
+	bodyId += reverse ? -1 : 1;
+	if (bodyId < 0) bodyId += res->getBodyCount();
+	else bodyId %= res->getBodyCount();
+}
+
+void Character::cycleTop(bool reverse)
+{
+	topId += reverse ? -1 : 1;
+	if (topId < -1) topId += res->getTopsCount();
+	else if (topId >= res->getTopsCount()) topId = -1;
+}
+
+void Character::cycleBottom(bool reverse)
+{
+	bottomId += reverse ? -1 : 1;
+	if (bottomId < -1) bottomId = res->getBottomsCount() - 1;
+	else if (bottomId >= res->getBottomsCount()) bottomId = -1;
+}
+
+void Character::cycleEyes(bool reverse)
+{
+	eyesId += reverse ? -1 : 1;
+	if (eyesId < 0) eyesId += res->getEyesCount();
+	else eyesId %= res->getEyesCount();
+}
+
+void Character::cycleHair(bool reverse)
+{
+	hairId += reverse ? -1 : 1;
+	if (hairId < -1) hairId = res->getHairCount() - 1;
+	else if (hairId >= res->getHairCount()) hairId = -1;
+}
+
+void Character::cycleFacialHair(bool reverse)
+{
+	facialHairId += reverse ? -1 : 1;
+	if (facialHairId < -1) facialHairId = res->getFacialHairCount() - 1;
+	else if (facialHairId >= res->getFacialHairCount()) facialHairId = -1;
+}
+
+void Character::cycleHat(bool reverse)
+{
+	hatId += reverse ? -1 : 1;
+	if (hatId < -1) hatId = res->getHatCount() - 1;
+	else if (hatId >= res->getHatCount()) hatId = -1;
+}
+
+void Character::cycleHead(bool reverse)
+{
+	headId += reverse ? -1 : 1;
+	if (headId < -1) headId = res->getHeadCount() - 1;
+	else if (headId >= res->getHeadCount()) headId = -1;
+}
+
+void Character::cycleExtra(bool reverse)
+{
+	extraId += reverse ? -1 : 1;
+	if (extraId < -1) extraId = res->getExtrasCount() - 1;
+	else if (extraId >= res->getExtrasCount()) extraId = -1;
+}
+
+void Character::cycleShoes(bool reverse)
+{
+	hasShoes = !hasShoes;
 }

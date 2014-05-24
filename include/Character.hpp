@@ -66,9 +66,6 @@ enum Direction {
 class Character : public HasLogic, private Animation
 {
 private:
-	static const int CharacterWidth = 35;
-	static const int CharacterHeight = 52;
-
 	CharacterResources *res;
 
 	int bodyId, topId, bottomId, eyesId, hairId, facialHairId, hatId, headId, extraId;
@@ -76,9 +73,14 @@ private:
 
 	Direction direction;
 
-	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y);
+	void drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame, float x, float y, float scale);
+	int getAnimationFrame(Direction direction);
+	void render(Direction direction, int frame, float x, float y, float scale);
 
 public:
+	static const int CharacterWidth = 32;
+	static const int CharacterHeight = 48;
+
 	Character(CharacterResources *res);
 	~Character();
 
@@ -89,6 +91,20 @@ public:
 	void tick(double delta);
 
 	void render(float x, float y);
+
+	// customization
+	void preview(Direction direction, bool animated, float x, float y, float scale);
+
+	void cycleBody(bool reverse);
+	void cycleTop(bool reverse);
+	void cycleBottom(bool reverse);
+	void cycleEyes(bool reverse);
+	void cycleHair(bool reverse);
+	void cycleFacialHair(bool reverse);
+	void cycleHat(bool reverse);
+	void cycleHead(bool reverse);
+	void cycleExtra(bool reverse);
+	void cycleShoes(bool reverse);
 };
 
 #endif
