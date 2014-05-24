@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="include\Animation.hpp" />
     <ClInclude Include="include\Character.hpp" />
+    <ClInclude Include="include\CharacterCustomizer.hpp" />
     <ClInclude Include="include\Display.hpp" />
     <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\GameLoop.hpp" />
@@ -96,11 +97,11 @@
     <ClInclude Include="include\RenderController.hpp" />
     <ClInclude Include="include\ResourceManager.hpp" />
     <ClInclude Include="include\Scene.hpp" />
-    <ClInclude Include="include\TestScene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Character.cpp" />
+    <ClCompile Include="src\CharacterCustomizer.cpp" />
     <ClCompile Include="src\Display.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameLoop.cpp" />
@@ -111,7 +112,6 @@
     <ClCompile Include="src\RenderController.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\TestScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

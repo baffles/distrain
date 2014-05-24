@@ -1,10 +1,10 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
-#include "TestScene.hpp"
+#include "CharacterCustomizer.hpp"
 #include "ResourceManager.hpp"
 #include "Character.hpp"
 
-TestScene::TestScene(ResourceManager *resourceManager, Character *character) : character(character), currentPart(BodyPart::Body)
+CharacterCustomizer::CharacterCustomizer(ResourceManager *resourceManager, Character *character) : character(character), currentPart(BodyPart::Body)
 {
 	character->setDirection(Direction::Down);
 	character->startWalk();
@@ -12,16 +12,16 @@ TestScene::TestScene(ResourceManager *resourceManager, Character *character) : c
 	font = resourceManager->getFontManager()->getBuiltinFont();
 }
 
-TestScene::~TestScene()
+CharacterCustomizer::~CharacterCustomizer()
 {
 }
 
-void TestScene::tick(double delta)
+void CharacterCustomizer::tick(double delta)
 {
 	character->tick(delta);
 }
 
-void TestScene::render()
+void CharacterCustomizer::render()
 {
 	float baseX = 50, baseY = 50;
 
@@ -75,7 +75,7 @@ void TestScene::render()
 	al_draw_text(font, currentPart == BodyPart::Shoes ? sel : unsel, baseX, baseY, 0, "Shoes");
 }
 
-void TestScene::cyclePart(bool reverse)
+void CharacterCustomizer::cyclePart(bool reverse)
 {
 	switch (currentPart)
 	{
@@ -121,7 +121,7 @@ void TestScene::cyclePart(bool reverse)
 	}
 }
 
-void TestScene::handleInputEvent(const ALLEGRO_EVENT &event)
+void CharacterCustomizer::handleInputEvent(const ALLEGRO_EVENT &event)
 {
 	if (event.type == ALLEGRO_EVENT_KEY_DOWN)
 	{

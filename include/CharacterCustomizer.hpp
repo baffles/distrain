@@ -1,5 +1,5 @@
-#ifndef __TESTSCENE_HPP
-#define __TESTSCENE_HPP
+#ifndef __CHARACTERCUSTOMIZER_HPP
+#define __CHARACTERCUSTOMIZER_HPP
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
@@ -23,7 +23,7 @@ enum BodyPart
 	BodyPartCount
 };
 
-class TestScene: public Scene
+class CharacterCustomizer : public Scene
 {
 private:
 	ALLEGRO_FONT *font;
@@ -34,8 +34,8 @@ private:
 	void cyclePart(bool reverse);
 
 public:
-	TestScene(ResourceManager *resourceManager, Character *character);
-	~TestScene();
+	CharacterCustomizer(ResourceManager *resourceManager, Character *character);
+	~CharacterCustomizer();
 
 	void tick(double delta);
 	void render();
