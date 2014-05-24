@@ -21,3 +21,8 @@ point at the Allegro install folder. e.g., View -> Other Windows -> Property Man
 
 You may also need to edit the project properties. In `Configuration Properties -> Debugging`, set
 `Environment` to `PATH=$(AllegroDir)\bin;%PATH%`
+
+## Credits
+
+* Character assets and map tileset from https://github.com/silveira/openpixels
+* Image assets were optimized using https://tinypng.com/
