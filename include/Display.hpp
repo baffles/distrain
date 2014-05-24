@@ -3,7 +3,7 @@
 
 #include <string>
 #include <allegro5/allegro.h>
-#include "HasEvents.hpp"
+#include "GameLoop.hpp"
 
 class Display : public HasEvents
 {

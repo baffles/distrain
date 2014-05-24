@@ -2,7 +2,6 @@
 #include <allegro5/allegro.h>
 #include "Game.hpp"
 #include "ResourceManager.hpp"
-#include "FontManager.hpp"
 #include "GameLoop.hpp"
 #include "GameTimer.hpp"
 #include "Display.hpp"

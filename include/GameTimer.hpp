@@ -2,7 +2,7 @@
 #define __GAMETIMER_HPP
 
 #include <allegro5/allegro.h>
-#include "HasEvents.hpp"
+#include "GameLoop.hpp"
 
 class RenderController;
 

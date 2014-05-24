@@ -3,7 +3,6 @@
 #include <allegro5/allegro.h>
 #include "GameLoop.hpp"
 #include "RenderController.hpp"
-#include "HasEvents.hpp"
 
 using namespace std;
 
@@ -77,4 +76,33 @@ void GameLoop::run()
 void GameLoop::kill()
 {
 	alive = false;
+}
+
+
+
+HasEvents::HasEvents(): loop(NULL), eventSource(NULL)
+{
+}
+
+HasEvents::~HasEvents()
+{
+	if (loop)
+		loop->unregisterHandler(this);
+}
+
+void HasEvents::registerWith(GameLoop *loop)
+{
+	if (this->loop)
+		throw runtime_error("attempted to register event source multiple times");
+
+	this->loop = loop;
+	loop->registerHandler(this);
+}
+
+ALLEGRO_EVENT_SOURCE *HasEvents::getEventSource()
+{
+	if (!eventSource)
+		eventSource = createEventSource();
+
+	return eventSource;
 }

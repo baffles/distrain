@@ -1,7 +1,7 @@
 #include <vector>
 #include <allegro5/allegro.h>
 #include "Character.hpp"
-#include "ImageManager.hpp"
+#include "ResourceManager.hpp"
 
 CharacterResources::CharacterResources(ImageManager *imageManager)
 {
