@@ -1,5 +1,6 @@
 #include <cmath>
 #include "Actor.hpp"
+#include "Constants.hpp"
 #include "Tilemap.hpp"
 
 using namespace std;
@@ -115,5 +116,5 @@ void Actor::tick(double delta)
 
 void Actor::render() const
 {
-	renderAt(x * TileSet::TileWidth, y * TileSet::TileHeight);
+	renderAt(x * Constants::TileWidth, y * Constants::TileHeight);
 }

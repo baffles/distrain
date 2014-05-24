@@ -1,6 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include "CharacterCustomizer.hpp"
+#include "Constants.hpp"
 #include "Game.hpp"
 #include "ResourceManager.hpp"
 #include "Character.hpp"
@@ -29,28 +30,28 @@ void CharacterCustomizer::render()
 
 	character->render(Direction::Down, baseX, baseY, false, 4.0f);
 
-	baseX += 5 * Character::CharacterWidth;
+	baseX += 5 * Constants::CharacterWidth;
 	
 	character->render(Direction::Up, baseX, baseY);
-	character->render(Direction::Up, baseX + Character::CharacterWidth, baseY, false);
+	character->render(Direction::Up, baseX + Constants::CharacterWidth, baseY, false);
 
-	baseY += Character::CharacterHeight;
+	baseY += Constants::CharacterHeight;
 
 	character->render(Direction::Left, baseX, baseY);
-	character->render(Direction::Left, baseX + Character::CharacterWidth, baseY, false);
+	character->render(Direction::Left, baseX + Constants::CharacterWidth, baseY, false);
 
-	baseY += Character::CharacterHeight;
+	baseY += Constants::CharacterHeight;
 
 	character->render(Direction::Right, baseX, baseY);
-	character->render(Direction::Right, baseX + Character::CharacterWidth, baseY, false);
+	character->render(Direction::Right, baseX + Constants::CharacterWidth, baseY, false);
 
-	baseY += Character::CharacterHeight;
+	baseY += Constants::CharacterHeight;
 
 	character->render(Direction::Down, baseX, baseY);
-	character->render(Direction::Down, baseX + Character::CharacterWidth, baseY, false);
+	character->render(Direction::Down, baseX + Constants::CharacterWidth, baseY, false);
 
-	baseX += 4 * Character::CharacterWidth;
-	baseY -= 3 * Character::CharacterHeight;
+	baseX += 4 * Constants::CharacterWidth;
+	baseY -= 3 * Constants::CharacterHeight;
 
 	static auto fontH = al_get_font_line_height(font);
 	auto unsel = al_map_rgb(255, 255, 255);

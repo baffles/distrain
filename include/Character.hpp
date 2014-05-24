@@ -71,9 +71,6 @@ private:
 	void render(Direction direction, int frame, float x, float y, float scale) const;
 
 public:
-	static const int CharacterWidth = 32;
-	static const int CharacterHeight = 48;
-
 	Character(CharacterResources *res);
 	~Character();
 
@@ -101,9 +98,6 @@ public:
 class CharacterActor : public Actor
 {
 private:
-	static const float WalkVelocity;
-	static const float RunVelocity;
-
 	Character *character;
 
 protected:

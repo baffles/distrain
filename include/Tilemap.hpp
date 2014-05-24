@@ -3,6 +3,7 @@
 
 #include <string>
 #include <allegro5/allegro.h>
+#include "Constants.hpp"
 
 class TileSet
 {
@@ -11,9 +12,6 @@ private:
 	int perRow;
 
 public:
-	static const int TileWidth = 32;
-	static const int TileHeight = 32;
-
 	TileSet(ALLEGRO_BITMAP *tileset);
 	~TileSet();
 
@@ -32,8 +30,8 @@ enum TileCellFlag
 class TileMap
 {
 public:
-	static const int ScreenWidth = 640 / TileSet::TileWidth;
-	static const int ScreenHeight = 480 / TileSet::TileHeight;
+	static const int ScreenWidth = 640 / Constants::TileWidth;
+	static const int ScreenHeight = 480 / Constants::TileHeight;
 
 private:
 	void load(std::string filename);

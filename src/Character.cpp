@@ -2,6 +2,7 @@
 #include <vector>
 #include <allegro5/allegro.h>
 #include "Character.hpp"
+#include "Constants.hpp"
 #include "ResourceManager.hpp"
 
 using namespace std;
@@ -280,9 +281,9 @@ void Character::drawChunk(ALLEGRO_BITMAP *chunk, Direction direction, int frame,
 	}
 
 	if (scale == 1.0f)
-		al_draw_bitmap_region(chunk, cx, cy, CharacterWidth, CharacterHeight, x, y, 0);
+		al_draw_bitmap_region(chunk, cx, cy, Constants::CharacterWidth, Constants::CharacterHeight, x, y, 0);
 	else
-		al_draw_scaled_bitmap(chunk, cx, cy, CharacterWidth, CharacterHeight, x, y, CharacterWidth * scale, CharacterHeight * scale, 0);
+		al_draw_scaled_bitmap(chunk, cx, cy, Constants::CharacterWidth, Constants::CharacterHeight, x, y, Constants::CharacterWidth * scale, Constants::CharacterHeight * scale, 0);
 }
 
 void Character::render(Direction direction, int frame, float x, float y, float scale) const
@@ -392,9 +393,6 @@ void Character::cycleShoes(bool reverse)
 
 
 
-const float CharacterActor::WalkVelocity = 3.4f;
-const float CharacterActor::RunVelocity = 10.0f;
-
 CharacterActor::CharacterActor(Character *character, TileEngine *engine) : character(character), Actor(engine)
 {
 }
@@ -426,14 +424,14 @@ void CharacterActor::stopMoving()
 void CharacterActor::walk(Direction direction)
 {
 	setDirection(direction);
-	setVelocity(WalkVelocity);
+	setVelocity(Constants::WalkVelocity);
 	startMoving();
 }
 
 void CharacterActor::run(Direction direction)
 {
 	setDirection(direction);
-	setVelocity(RunVelocity);
+	setVelocity(Constants::RunVelocity);
 	startMoving();
 }
 

@@ -4,13 +4,14 @@
 #include <stdexcept>
 #include <string>
 #include <allegro5/allegro.h>
+#include "Constants.hpp"
 #include "Tilemap.hpp"
 
 using namespace std;
 
 TileSet::TileSet(ALLEGRO_BITMAP *tileset) : tileset(tileset)
 {
-	perRow = al_get_bitmap_width(tileset) / TileWidth;
+	perRow = al_get_bitmap_width(tileset) / Constants::TileWidth;
 }
 
 TileSet::~TileSet()
@@ -19,9 +20,9 @@ TileSet::~TileSet()
 
 void TileSet::draw(int tile, float x, float y) const
 {
-	int sx = (tile % perRow) * TileWidth;
-	int sy = (tile / perRow) * TileHeight;
-	al_draw_bitmap_region(tileset, sx, sy, TileWidth, TileHeight, x, y, 0);
+	int sx = (tile % perRow) * Constants::TileWidth;
+	int sy = (tile / perRow) * Constants::TileHeight;
+	al_draw_bitmap_region(tileset, sx, sy, Constants::TileWidth, Constants::TileHeight, x, y, 0);
 }
 
 
@@ -141,7 +142,7 @@ void TileEngine::renderBase() const
 		for (int x = 0; x < TileMap::ScreenWidth; ++x)
 		{
 			auto cell = currentMap->cells[y][x];
-			auto dx = x * TileSet::TileWidth, dy = y * TileSet::TileHeight;
+			auto dx = x * Constants::TileWidth, dy = y * Constants::TileHeight;
 
 			tileSet->draw(cell.tile, dx, dy);
 		}
@@ -161,7 +162,7 @@ void TileEngine::renderOverlay() const
 			auto cell = currentMap->cells[y][x];
 			if (cell.flag == TileCellFlag::Overlay)
 			{
-				auto dx = x * TileSet::TileWidth, dy = y * TileSet::TileHeight;
+				auto dx = x * Constants::TileWidth, dy = y * Constants::TileHeight;
 				tileSet->draw(cell.flagArg, dx, dy);
 			}
 		}

@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include <allegro5/allegro.h>
 #include "Game.hpp"
+#include "Constants.hpp"
 #include "ResourceManager.hpp"
 #include "GameLoop.hpp"
 #include "GameTimer.hpp"
@@ -20,14 +21,14 @@ Game::Game() : currentScene(NULL)
 
 	resourceManager = new ResourceManager();
 
-	display = new Display(640, 480, "Distrain - BAF's SpeedHack 2014 Entry");
+	display = new Display(Constants::ResolutionX, Constants::ResolutionY, "Distrain - BAF's SpeedHack 2014 Entry");
 
 	logicManager = new LogicManager();
 	renderer = new RenderController(display, true, resourceManager->getFontManager()->getBuiltinFont());
 	keyboardManager = new KeyboardManager();
 	loop = new GameLoop(logicManager, renderer);
 
-	timer = new GameTimer(renderer, 30);
+	timer = new GameTimer(renderer, Constants::FPS);
 
 	keyboardManager->registerWith(loop);
 	display->registerWith(loop);

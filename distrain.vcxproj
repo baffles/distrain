@@ -89,6 +89,7 @@
     <ClInclude Include="include\Animation.hpp" />
     <ClInclude Include="include\Character.hpp" />
     <ClInclude Include="include\CharacterCustomizer.hpp" />
+    <ClInclude Include="include\Constants.hpp" />
     <ClInclude Include="include\Display.hpp" />
     <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\GameLoop.hpp" />
