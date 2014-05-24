@@ -1,26 +1,28 @@
-#ifndef __TESTSCENE_HPP
-#define __TESTSCENE_HPP
+#ifndef __GAMESCENE_HPP
+#define __GAMESCENE_HPP
 
 #include <allegro5/allegro.h>
 #include "Scene.hpp"
 
+class Game;
 class Character;
 class CharacterActor;
 class TileEngine;
 class World;
 
-class TestScene : public Scene
+class GameScene : public Scene
 {
 private:
-	CharacterActor *actor;
+	Game *game;
+	CharacterActor *player;
 	TileEngine *engine;
 	World *world;
 
 	int moveKey;
 
 public:
-	TestScene(Character *character, TileEngine *engine);
-	~TestScene();
+	GameScene(Game *game);
+	~GameScene();
 
 	void tick(double delta);
 	void render();

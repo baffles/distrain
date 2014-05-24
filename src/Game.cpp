@@ -11,6 +11,8 @@
 #include "KeyboardManager.hpp"
 #include "Scene.hpp"
 #include "Character.hpp"
+#include "CharacterCustomizer.hpp"
+#include "GameScene.hpp"
 
 using namespace std;
 
@@ -35,10 +37,16 @@ Game::Game() : currentScene(NULL)
 	timer->registerWith(loop);
 
 	character = new Character(new CharacterResources(resourceManager->getImageManager()));
+
+	characterCustomizer = new CharacterCustomizer(this);
+	gameScene = new GameScene(this);
 }
 
 Game::~Game()
 {
+	delete characterCustomizer;
+	delete gameScene;
+
 	delete resourceManager;
 	delete logicManager;
 	delete renderer;
@@ -99,4 +107,14 @@ GameLoop *Game::getLoop() const
 Character *Game::getCharacter() const
 {
 	return character;
+}
+
+CharacterCustomizer *Game::getCharacterCustomizer() const
+{
+	return characterCustomizer;
+}
+
+GameScene *Game::getGameScene() const
+{
+	return gameScene;
 }

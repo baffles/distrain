@@ -12,6 +12,9 @@ class GameTimer;
 class Character;
 class Scene;
 
+class CharacterCustomizer;
+class GameScene;
+
 class Game
 {
 private:
@@ -22,6 +25,9 @@ private:
 	KeyboardManager *keyboardManager;
 	GameLoop *loop;
 	GameTimer *timer;
+
+	CharacterCustomizer *characterCustomizer;
+	GameScene *gameScene;
 
 	Character *character;
 	Scene *currentScene;
@@ -42,6 +48,9 @@ public:
 	GameLoop *getLoop() const;
 
 	Character *getCharacter() const;
+
+	CharacterCustomizer *getCharacterCustomizer() const;
+	GameScene *getGameScene() const;
 };
 
 #endif

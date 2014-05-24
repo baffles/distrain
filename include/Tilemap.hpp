@@ -47,7 +47,7 @@ public:
 	struct TileCell
 	{
 		int tile;
-		bool blocking;
+		bool blocking, zhigh;
 		TileCellFlag flag;
 		int flagArg;
 	} cells[ScreenHeight][ScreenWidth];

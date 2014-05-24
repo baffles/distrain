@@ -80,7 +80,10 @@ void TileMap::load(string filename)
 			string flagS = cell.substr(splitPos + 1, cell.length() - splitPos - 2);
 
 			cells[y][x].tile = stoi(idS);
-			cells[y][x].blocking = cell[cell.length() - 1] == 'b';
+
+			auto cflag = cell[cell.length() - 1];
+			cells[y][x].blocking = cflag == 'b';
+			cells[y][x].zhigh = cflag == 'b' || cflag == 'z';
 
 			int flag = stoi(flagS);
 
@@ -175,7 +178,7 @@ void TileEngine::renderBase() const
 
 			tileSet->draw(cell.tile, dx, dy);
 
-			if (cell.flag == TileCellFlag::Overlay && !cell.blocking)
+			if (cell.flag == TileCellFlag::Overlay && !cell.zhigh)
 				tileSet->draw(cell.flagArg, dx, dy);
 		}
 
@@ -192,7 +195,7 @@ void TileEngine::renderOverlay() const
 		for (int x = 0; x < TileMap::ScreenWidth; ++x)
 		{
 			auto cell = currentMap->cells[y][x];
-			if (cell.flag == TileCellFlag::Overlay && cell.blocking)
+			if (cell.flag == TileCellFlag::Overlay && cell.zhigh)
 			{
 				auto dx = x * Constants::TileWidth, dy = y * Constants::TileHeight;
 				tileSet->draw(cell.flagArg, dx, dy);

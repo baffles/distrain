@@ -3,6 +3,7 @@
 #include "CharacterCustomizer.hpp"
 #include "Constants.hpp"
 #include "Game.hpp"
+#include "GameScene.hpp"
 #include "ResourceManager.hpp"
 #include "Character.hpp"
 
@@ -166,7 +167,8 @@ void CharacterCustomizer::handleInputEvent(const ALLEGRO_EVENT &event)
 				break;
 
 			case MenuOption::Play:
-				// TODO
+				character->stopAnimation();
+				game->setScene(game->getGameScene());
 				break;
 
 			case MenuOption::Quit:
