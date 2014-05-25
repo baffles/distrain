@@ -181,8 +181,11 @@ void TileEngine::renderBase() const
 
 			tileSet->draw(cell.tile, dx, dy);
 
-			if (cell.flag == TileCellFlag::Overlay && !cell.zhigh)
-				tileSet->draw(cell.flagArg, dx, dy);
+			if ((cell.flag == TileCellFlag::Overlay || (cell.flag == TileCellFlag::SpecialUse && cell.flagArg > 100)) && !cell.zhigh)
+			{
+				auto overlay = cell.flag == TileCellFlag::SpecialUse ? cell.flagArg / 100 : cell.flagArg;
+				tileSet->draw(overlay, dx, dy);
+			}
 		}
 
 	al_hold_bitmap_drawing(false);
@@ -198,10 +201,11 @@ void TileEngine::renderOverlay() const
 		for (int x = 0; x < TileMap::ScreenWidth; ++x)
 		{
 			auto cell = currentMap->cells[y][x];
-			if (cell.flag == TileCellFlag::Overlay && cell.zhigh)
+			if ((cell.flag == TileCellFlag::Overlay || (cell.flag == TileCellFlag::SpecialUse && cell.flagArg > 100)) && cell.zhigh)
 			{
 				auto dx = x * Constants::TileWidth, dy = y * Constants::TileHeight;
-				tileSet->draw(cell.flagArg, dx, dy);
+				auto overlay = cell.flag == TileCellFlag::SpecialUse ? cell.flagArg / 100 : cell.flagArg;
+				tileSet->draw(overlay, dx, dy);
 			}
 		}
 

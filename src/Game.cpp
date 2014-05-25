@@ -56,6 +56,8 @@ Game::~Game()
 	delete loop;
 
 	currentScene = NULL;
+
+	al_uninstall_system();
 }
 
 void Game::run()

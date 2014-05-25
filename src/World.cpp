@@ -11,6 +11,7 @@ World::World(TileEngine *engine, CharacterActor *player) : engine(engine), playe
 {
 	maps[0] = new TileMap("data/maps/house.map");
 	maps[1] = new TileMap("data/maps/yard.map");
+	maps[2] = new TileMap("data/maps/shore.map");
 
 	// start in the yard real quick, just so we can push a state for when we exit the house
 	player->setDirection(Direction::Down);
@@ -106,7 +107,7 @@ void World::playerUse()
 		break;
 
 	case TileCellFlag::SpecialUse:
-		//TODO
+		auto arg = cell.flagArg - (cell.flagArg / 100 * 100);
 		break;
 	}
 }
