@@ -5,6 +5,40 @@ rather is meant to be my own word, built by adding the dis- prefix to 'train.' T
 concept in the game that as you train and level up, you're applying stats to the enemy as well,
 which is sort of the opposite of training.
 
+This name reflects on some old game ideas that fell out of use here.
+
+## SpeedHack Rules
+
+Unfortunately, some plans I was assuming would be canceled for Sunday ended up working out (weather cleared up). This left me with a fair chunk less time than anticipated, which prevented me from finishing the entry.
+
+In its current state, the main player can be customized, and there is a minimal map to run around in. Not much to actually do though.
+
+### Genre Requirements
+
+#### Traveling Salesman
+The idea here evolved to exploring the map, looking for and gathering keys. This idea is not fully fleshed out nor fully implemented.
+
+### Technical Requirements
+
+#### Character Development
+The idea here was to have the player gain experience/stat points by battling enemies, giving the player more power and special abilities. Again, this idea is not fully fleshed out nor implemented.
+
+#### Easter Egg
+There was no idea in place for this yet therefore not implemented.
+
+### Artistic Requirements
+
+#### Player Customization
+The skin for the main character can be fully customized. This is fully implemented.
+
+#### Soviet Russia
+The idea here was to have enemies in the game, and the relationship with the player flipped around. Enemies begin killing themselves when they're within a certain range of the player. The player must heal the enemy before it dies in order to gain experience points. This idea is not implemented.
+
+### Bonus Rules
+
+#### Act of Efficiency
+I was considering invoking this act to remove various rules at various stages of developing the game idea. I'm not invoking it at the present time.
+
 ## Building
 
 ### Makefile
