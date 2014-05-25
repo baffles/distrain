@@ -7,6 +7,8 @@ which is sort of the opposite of training.
 
 This name reflects on some old game ideas that fell out of use here.
 
+The full git repository is [available on GitHub](https://github.com/baffles/distrain), if you care to view development history.
+
 ## SpeedHack Rules
 
 Unfortunately, some plans I was assuming would be canceled for Sunday ended up working out (weather cleared up). This left me with a fair chunk less time than anticipated, which prevented me from finishing the entry.
