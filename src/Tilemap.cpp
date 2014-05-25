@@ -82,7 +82,7 @@ void TileMap::load(string filename)
 			cells[y][x].tile = stoi(idS);
 
 			auto cflag = cell[cell.length() - 1];
-			cells[y][x].blocking = cflag == 'b';
+			cells[y][x].blocking = cflag == 'b' || cflag == 'd';
 			cells[y][x].zhigh = cflag == 'b' || cflag == 'z';
 
 			int flag = stoi(flagS);
@@ -98,6 +98,7 @@ void TileMap::load(string filename)
 
 				case 11:
 					cells[y][x].flag = TileCellFlag::PopWarp;
+					cerr << cells[y][x].flag << endl;
 					break;
 
 				default:
@@ -105,7 +106,9 @@ void TileMap::load(string filename)
 					cells[y][x].flagArg = frontMatter[flag];
 					break;
 				}
+				break;
 
+			case 3:
 			case 4:
 			case 5:
 			case 6:

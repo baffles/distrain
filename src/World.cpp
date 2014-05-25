@@ -10,7 +10,13 @@ using Constants::Direction;
 World::World(TileEngine *engine, CharacterActor *player) : engine(engine), player(player), currentMap(NULL), currentMapId(-1)
 {
 	maps[0] = new TileMap("data/maps/house.map");
-	maps[1] = new TileMap("data/maps/test.map");
+	maps[1] = new TileMap("data/maps/yard.map");
+
+	// start in the yard real quick, just so we can push a state for when we exit the house
+	player->setDirection(Direction::Down);
+	warpTo(1);
+	player->setDirection(Direction::Up);
+	pushState();
 
 	player->setDirection(Direction::Down);
 	warpTo(0);
@@ -51,14 +57,13 @@ void World::tick()
 	switch (cell.flag)
 	{
 	case TileCellFlag::PushAutoWarp:
-		states.push(getCurrentState());
+		pushState();
 	case TileCellFlag::AutoWarp:
 		warpTo(cell.flagArg);
 		break;
 
 	case TileCellFlag::PopAutoWarp:
-		returnToState(states.top());
-		states.pop();
+		popState();
 		break;
 	}
 }
@@ -67,21 +72,37 @@ void World::playerUse()
 {
 	if (!currentMap) return;
 
-	// the player 'used' the current cell
+	// the player 'used' the current cell (so take the one they're looking at)
 	int x = floor(player->getX()), y = floor(player->getY());
+
+	switch (player->getDirection())
+	{
+	case Direction::Up:
+		y--;
+		break;
+	case Direction::Down:
+		y++;
+		break;
+	case Direction::Left:
+		x--;
+		break;
+	case Direction::Right:
+		x++;
+		break;
+	}
+
 	auto cell = currentMap->cells[y][x];
 
 	switch (cell.flag)
 	{
 	case TileCellFlag::PushWarp:
-		states.push(getCurrentState());
+		pushState();
 	case TileCellFlag::Warp:
 		warpTo(cell.flagArg);
 		break;
 
 	case TileCellFlag::PopWarp:
-		returnToState(states.top());
-		states.pop();
+		popState();
 		break;
 
 	case TileCellFlag::SpecialUse:
@@ -95,6 +116,17 @@ WorldState World::getCurrentState() const
 	return WorldState(currentMapId, player->getDirection(), player->getX(), player->getY());
 }
 
+void World::pushState()
+{
+	states.push(getCurrentState());
+}
+
+void World::popState()
+{
+	returnToState(states.top());
+	states.pop();
+}
+
 void World::warpTo(int id)
 {
 	currentMapId = id;
@@ -102,7 +134,7 @@ void World::warpTo(int id)
 	engine->setMap(currentMap);
 
 	auto startPos = currentMap->startPositions[player->getDirection()];
-	player->setPosition(startPos.x, startPos.y);
+	player->setPosition(startPos.x + 0.5f, startPos.y + 0.5f);
 }
 
 void World::returnToState(WorldState state)

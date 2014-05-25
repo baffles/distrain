@@ -30,6 +30,8 @@ private:
 
 	std::stack<WorldState> states;
 	WorldState getCurrentState() const;
+	void pushState();
+	void popState();
 
 	void warpTo(int id);
 	void returnToState(WorldState state);
